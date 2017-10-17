@@ -1,9 +1,9 @@
-package edu.eci.arsw.movecatchandwin.persistence.room.impl;
+package edu.eci.arsw.game.persistence.room.impl;
 
-import edu.eci.arsw.movecatchandwin.model.Player;
-import edu.eci.arsw.movecatchandwin.model.Room;
-import edu.eci.arsw.movecatchandwin.persistence.room.RoomPersistence;
-import edu.eci.arsw.movecatchandwin.persistence.room.RoomPersistenceException;
+import edu.eci.arsw.game.model.Player;
+import edu.eci.arsw.game.model.Room;
+import edu.eci.arsw.game.persistence.room.RoomPersistence;
+import edu.eci.arsw.game.persistence.room.RoomPersistenceException;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

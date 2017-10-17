@@ -1,4 +1,4 @@
-package edu.eci.arsw.movecatchandwin.persistence.room;
+package edu.eci.arsw.game.persistence.room;
 
 /**
  * @author KevinMendieta

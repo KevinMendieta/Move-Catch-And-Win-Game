@@ -1,7 +1,7 @@
-package edu.eci.arsw.movecatchandwin.persistence.room;
+package edu.eci.arsw.game.persistence.room;
 
-import edu.eci.arsw.movecatchandwin.model.Player;
-import edu.eci.arsw.movecatchandwin.model.Room;
+import edu.eci.arsw.game.model.Player;
+import edu.eci.arsw.game.model.Room;
 
 import java.util.ArrayList;
 

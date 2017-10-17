@@ -1,4 +1,4 @@
-package edu.eci.arsw.movecatchandwin.model;
+package edu.eci.arsw.game.model;
 
 import java.util.ArrayList;
 
@@ -13,7 +13,7 @@ public class Room {
     private ArrayList<Player> players;
 
     public Room(int id) {
-        this.players = new ArrayList<Player>();
+        this.players = new ArrayList<>();
         this.id = id;
     }
 

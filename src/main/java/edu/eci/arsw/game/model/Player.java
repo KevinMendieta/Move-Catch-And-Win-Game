@@ -1,4 +1,4 @@
-package edu.eci.arsw.movecatchandwin.model;
+package edu.eci.arsw.game.model;
 
 /**
  * @author KevinMendieta
