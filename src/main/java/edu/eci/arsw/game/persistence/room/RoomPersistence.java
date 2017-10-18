@@ -26,7 +26,7 @@ public interface RoomPersistence {
     public void registerPlayerInRoom(int id, Player player) throws RoomPersistenceException;
 
     /**
-     * Resgister a winner for a room.
+     * Register a winner for a room.
      * @param id The id of the room.
      * @param player The winner player.
      * @throws RoomPersistenceException if the room does not exists.

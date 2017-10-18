@@ -9,7 +9,7 @@ import org.springframework.context.annotation.ComponentScan;
  * @author KevinMendieta
  */
 @SpringBootApplication
-@ComponentScan(basePackages = {"edu.eci.arsw.movecatchandwin"})
+@ComponentScan(basePackages = {"edu.eci.arsw.game"})
 public class MoveCatchAndWinApiApplication {
 
     public static void main(String[] args) {

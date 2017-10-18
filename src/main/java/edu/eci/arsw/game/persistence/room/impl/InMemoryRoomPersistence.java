@@ -7,13 +7,24 @@ import edu.eci.arsw.game.persistence.room.RoomPersistenceException;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import org.springframework.stereotype.Service;
 
 /**
  * @author KevinMendieta
  */
+@Service
 public class InMemoryRoomPersistence implements RoomPersistence{
 
     private final Map<Integer, Room> rooms = new ConcurrentHashMap<>();
+    
+    public InMemoryRoomPersistence() {
+        Player firstPlayer = new Player("Sebastian", "sebastian@mail.com", "k457");
+        Player secondPlayer = new Player("Esteban", "esteban@mail.com", "j785");
+        Room room = new Room(0);
+        room.addPlayer(firstPlayer);
+        room.addPlayer(secondPlayer);
+        rooms.put(0, room);
+    }
     
     @Override
     public void registerNewRoom(Room room) throws RoomPersistenceException {
@@ -59,7 +70,5 @@ public class InMemoryRoomPersistence implements RoomPersistence{
         if (!rooms.containsKey(id)) throw new RoomPersistenceException("The room " + id + " does not exist.");
         return rooms.get(id).getPlayers();
     }
-    
-    
-    
+
 }
