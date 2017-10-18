@@ -45,6 +45,13 @@ public class GameServices {
     public void registerWinnerOfRoom(int id, Player player) throws RoomPersistenceException {
         roomPersistence.registerWinnerOfRoom(id, player);
     }
+    
+    /**
+     * @return Return all the current rooms.
+     */
+    public ArrayList<Room> getRooms() {
+        return roomPersistence.getRooms();
+    }
 
     /**
      * Return a room given a id room.

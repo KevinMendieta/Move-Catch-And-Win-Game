@@ -52,6 +52,11 @@ public class InMemoryRoomPersistence implements RoomPersistence{
             rooms.get(id).setWinner(player);
         }
     }
+    
+    @Override
+    public ArrayList<Room> getRooms() {
+        return new ArrayList<>(rooms.values());
+    }
 
     @Override
     public Room getRoom(int id) throws RoomPersistenceException {

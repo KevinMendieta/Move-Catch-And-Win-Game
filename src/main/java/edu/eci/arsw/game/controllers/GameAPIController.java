@@ -23,6 +23,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class GameAPIController {
 
     private GameServices gameServices;
+    
+    @RequestMapping(method = RequestMethod.GET, path = "/rooms")
+    public ResponseEntity<?> getRooms() {
+        return new ResponseEntity<>(gameServices.getRooms(), HttpStatus.ACCEPTED);
+    }
 
     @RequestMapping(method = RequestMethod.GET, path = "/rooms/{roomId}")
     public ResponseEntity<?> getRoom(@PathVariable int roomId) {

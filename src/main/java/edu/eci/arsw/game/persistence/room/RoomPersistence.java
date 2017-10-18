@@ -32,6 +32,11 @@ public interface RoomPersistence {
      * @throws RoomPersistenceException if the room does not exists.
      */
     public void registerWinnerOfRoom(int id, Player player) throws RoomPersistenceException;
+    
+    /**
+     * @return Return all the current rooms.
+     */
+    public ArrayList<Room> getRooms();
 
     /**
      * Return a room given a id room.
