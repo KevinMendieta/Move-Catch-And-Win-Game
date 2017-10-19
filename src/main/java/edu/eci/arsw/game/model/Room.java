@@ -16,6 +16,8 @@ public class Room {
         this.players = new ArrayList<>();
         this.id = id;
     }
+    
+    public Room() {}
 
     /**
      * Sets the winner of the room.

@@ -62,7 +62,7 @@ public class GameAPIController {
     }
 
     @RequestMapping(method = RequestMethod.POST, path = "/rooms/{roomId}/players")
-    public ResponseEntity<?> registerPlayer(@RequestBody int roomId, @RequestBody Player player) {
+    public ResponseEntity<?> registerPlayer(@PathVariable int roomId, @RequestBody Player player) {
         try {
             gameServices.registerPlayerInRoom(roomId, player);
             return new ResponseEntity<>(HttpStatus.ACCEPTED);

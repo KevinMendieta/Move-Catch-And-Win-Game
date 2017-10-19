@@ -12,6 +12,8 @@ public class Player {
         this.nickName = nickName;
         this.password = password;
     }
+    
+    public Player() {}
 
     /**
      * @return The nickname of the player.

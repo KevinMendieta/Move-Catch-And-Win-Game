@@ -37,10 +37,12 @@
 								<input type="text" name="demo-name" id="demo-name" value="" placeholder="Room Id" />
 							</div>
 							<div class="6u$ 12u$(xsmall)">
-								<a href="#" class="button fit">GO!</a>
+								<a class="button fit" onclick="connectButton(document.getElementById('demo-name').value)">GO!</a>
 							</div>
 						</div>
 						<div class="row uniform" id="gameInfo">
+							<h3>Current Players!</h3>
+							<ul id="gameInfo"></ul>	
 						</div>
 						<div class="row uniform" id="gameCanvas">
 						</div>
