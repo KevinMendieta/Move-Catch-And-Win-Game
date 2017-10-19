@@ -1,40 +1,29 @@
 //@author KevinMendieta
+// Principal controller for the game.
 
-var stompClient;
-
-function putRooms(rooms) {
-	rooms.map(function(room) {
-		let content = "<li> id: " + room.id + " current players: " + room.players.length + "</li>";
-		$("#roomInfo").append(content);
-	});
-}
-
+var name = Math.floor((Math.random() * 10) + 1) + "",
+	roomId;
 function loadRooms() {
 	getAllRooms(putRooms);
 }
 
-function putPlayers(players) {
-	$("#gameInfo").find("li").remove();
-	players.map(function(player) {
-		let content = "<li>" + player.nickName + ".</li>";
-		$("#gameInfo").append(content);
-	});
+function startEvent() {
+	getPlayersRoom(subscribePlayers);
 }
 
-function init(eventBody) {
-	console.log(eventBody.body);
-}
-
-function subscribeRoom(id) {
-	var socket = new SockJS("/stompendpoint");
-	stompClient = Stomp.over(socket);
-	stompClient.connect({}, function(frame) {
-		stompClient.subscribe("/topic/start." +  id, init);
-		let player = {"nickName":"Kevin"};
-		connectRoom(id, player, putPlayers);
-	});
+function init() {
+	putCanvas(540, 405);
 }
 
 function connectButton(id) {
-	subscribeRoom(id);
+	roomId = id;
+	subscribeRoom();
+}
+
+function endGame() {
+
+}
+
+function movePlayer(eventBody) {
+
 }

@@ -98,7 +98,6 @@ public class GameAPIController {
     }
     
     public void sendStartMessage(int id) {
-        System.out.println("Sending message!!!!!!!");
         msgt.convertAndSend("/topic/start." +  id,"Enough Players to Play.");
     }
 
