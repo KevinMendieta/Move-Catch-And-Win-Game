@@ -11,11 +11,15 @@
 		<title>Move Catch and Win</title>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<script src="/webjars/jquery/jquery.min.js"></script>
+    	<script src="/webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    	<script src="js/game/api.js"></script>
+		<script src="js/game/main.js"></script>		
 		<link rel="stylesheet" href="stylesheets/main.css" />
 		<noscript><link rel="stylesheet" href="stylesheets/noscript.css" /></noscript>
 	</head>
 
-	<body class="is-loading">
+	<body class="is-loading" onload="loadRooms()">
 
 		<div id="wrapper" class="fade-in">
 
@@ -25,6 +29,10 @@
 						<h1>Move! Catch! Win!</h1>
 						<p>Select a room to start playing!</p>
 						<div class="row uniform">
+							<h3>Current Rooms!</h3>
+							<ul id="roomInfo"></ul>	
+						</div>
+						<div class="row uniform">
 							<div class="6u 12u$(xsmall)">
 								<input type="text" name="demo-name" id="demo-name" value="" placeholder="Room Id" />
 							</div>
@@ -32,9 +40,9 @@
 								<a href="#" class="button fit">GO!</a>
 							</div>
 						</div>
-						<div class="row uniform" id="apiInfo">
+						<div class="row uniform" id="gameInfo">
 						</div>
-						<div class="row uniform" id="apiCanvas">
+						<div class="row uniform" id="gameCanvas">
 						</div>
 					</header>
 				</section>
