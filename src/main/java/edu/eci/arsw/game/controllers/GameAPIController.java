@@ -31,7 +31,6 @@ public class GameAPIController {
 
     @RequestMapping(method = RequestMethod.GET, path = "/rooms/{roomId}")
     public ResponseEntity<?> getRoom(@PathVariable int roomId) {
-        //obtener datos que se enviarán a través del API
         Room result;
         try {
             result = gameServices.getRoom(roomId);
