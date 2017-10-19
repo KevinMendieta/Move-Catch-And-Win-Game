@@ -5,14 +5,12 @@ package edu.eci.arsw.game.model;
  */
 public class Player {
 
-    private String nickName, email, password;
+    private String nickName;
 
-    public Player(String nickName, String email, String password) {
-        this.email = email;
+    public Player(String nickName) {
         this.nickName = nickName;
-        this.password = password;
     }
-    
+
     public Player() {}
 
     /**
@@ -20,13 +18,6 @@ public class Player {
      */
     public String getNickName() {
         return nickName;
-    }
-
-    /**
-     * @return The email of the player.
-     */
-    public String getEmail() {
-        return email;
     }
 
 }

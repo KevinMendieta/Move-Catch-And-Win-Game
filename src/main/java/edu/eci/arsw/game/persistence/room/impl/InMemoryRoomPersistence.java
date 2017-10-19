@@ -18,8 +18,8 @@ public class InMemoryRoomPersistence implements RoomPersistence{
     private final Map<Integer, Room> rooms = new ConcurrentHashMap<>();
     
     public InMemoryRoomPersistence() {
-        Player firstPlayer = new Player("Sebastian", "sebastian@mail.com", "k457");
-        Player secondPlayer = new Player("Esteban", "esteban@mail.com", "j785");
+        Player firstPlayer = new Player("Sebastian");
+        Player secondPlayer = new Player("Esteban");
         Room room = new Room(0);
         room.addPlayer(firstPlayer);
         room.addPlayer(secondPlayer);

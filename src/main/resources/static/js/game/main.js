@@ -20,6 +20,6 @@ function putPlayers(players) {
 }
 
 function connectButton(id) {
-	let player = {"nickName":"Kevin","email":"kevin@mail.com", "password":"145"};
+	let player = {"nickName":"Kevin"};
 	connectRoom(id, player, putPlayers);
 }
