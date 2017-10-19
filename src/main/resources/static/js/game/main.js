@@ -12,8 +12,9 @@ function loadRooms() {
 }
 
 function putPlayers(players) {
+	$('#gameInfo').find('li').remove();
 	players.map(function(player) {
-		let content = '<li>' + player.nickName + '</li>';
+		let content = '<li>' + player.nickName + '.</li>';
 		$('#gameInfo').append(content);
 	});
 }
