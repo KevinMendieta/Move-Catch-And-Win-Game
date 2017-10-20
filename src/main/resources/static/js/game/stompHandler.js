@@ -1,6 +1,6 @@
 //@author KevinMendieta
 // Handler of subscriptions and messages.
-/* global Stomp */
+/* global Stomp, roomId, endGame, startEvent, putPlayers, movePlayer */
 
 var stompClient;
 
@@ -20,7 +20,7 @@ function subscribePlayers(players) {
 	stompClient = Stomp.over(socket);
 	stompClient.connect({}, function(frame) {
 		for (let i = 0; i < players.length; i++) {
-			if (players[i].nickName != name) {
+			if (players[i].nickName !== name) {
 				stompClient.subscribe("/topic/room" + roomId + "." + players[i].nickName, movePlayer);
 			}
 		}

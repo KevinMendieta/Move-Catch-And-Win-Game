@@ -1,3 +1,5 @@
+/* global roomId */
+
 //@author KevinMendieta
 //Handler of the RESTFul API
 

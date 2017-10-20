@@ -1,3 +1,5 @@
+/* global putRooms, subscribePlayers */
+
 //@author KevinMendieta
 // Principal controller for the game.
 
