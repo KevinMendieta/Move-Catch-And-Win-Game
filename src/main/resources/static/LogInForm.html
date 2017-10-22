@@ -5,27 +5,63 @@
 	html5up.net | @ajlkn
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 -->
-<html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 
 	<head>
 		<title>Move Catch and Win</title>
-		<meta charset="UTF-8">
+		
+                <meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+                
 		<link rel="stylesheet" href="stylesheets/main.css" />
-		<noscript><link rel="stylesheet" href="stylesheets/noscript.css" /></noscript>
+                <link rel="stylesheet" href="stylesheets/style.css"/>
+                <link
+                    href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+                    rel="stylesheet"
+                    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+                    crossorigin="anonymous" />
+                <noscript><link rel="stylesheet" href="stylesheets/noscript.css" /></noscript>
 	</head>
 
-	<body class="is-loading">
+	<body class="gray-bg">
+            
+            <div class="middle-box text-center loginscreen animated fadeInDown">
+                <div>
 
-		<div id="wrapper" class="fade-in">
+                    <hr />
 
-			<div id="main">
-				<section class="post">
-					On progress
-				</section>
-			</div>
+                    <h3>Game Account</h3>
 
-		</div>
+                    <form method="post" class="m-t" role="form">
+
+                        <div class="form-group input-group has-feedback">
+                            <label class="validation-message"></label>
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-user"></span>
+                            </span>
+
+                            <input type="text" placeholder="Nickname" class="form-control" required />
+                            <span class="glyphicon form-control-feedback"></span>
+                        </div>
+                        
+                        <div class="form-group input-group">
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-lock"></span>
+                            </span>
+                            <input name="password" type="password" id="password"  
+                                   placeholder="Password" class="form-control" required />
+                            <span class="glyphicon"></span>
+                        </div>
+                        
+                        <button class="btn-info block full-width" type="submit">Sign In</button>
+                        
+                        <h6 class="block full-width m-b"><a href="SignUpForm.html">Create an account</a></h6>
+                    </form>
+                    <p class="m-t">
+
+                    </p>
+                </div>
+            </div>
 
 	</body>
 
