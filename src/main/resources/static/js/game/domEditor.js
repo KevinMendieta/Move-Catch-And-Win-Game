@@ -17,7 +17,7 @@ function putPlayers(players) {
 }
 
 function putCanvas(width, height) {
-	var content = "<canvas id=" + '"myCanvas"' 
+	var content = "<canvas id=" + '"screen"' 
 	+ ' width="' + width + '" height="' + height + 
 	'" style=' + '"border:1px solid #d3d3d3;">';
 	console.log(content);
