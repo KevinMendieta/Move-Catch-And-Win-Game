@@ -5,17 +5,18 @@
  */
 package edu.eci.arsw.game.persistence.user.impl;
 
-import edu.eci.arsw.game.model.Room;
 import edu.eci.arsw.game.model.User;
 import edu.eci.arsw.game.persistence.user.UserPersistence;
 import edu.eci.arsw.game.persistence.user.UserPersistenceException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author Zekkenn
  */
+@Service
 public class InMemoryUserPersistence implements UserPersistence{
     
     private final Map<Integer, User> users = new ConcurrentHashMap<>();

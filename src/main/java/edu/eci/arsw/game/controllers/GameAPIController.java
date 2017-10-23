@@ -4,6 +4,7 @@ import edu.eci.arsw.game.model.Player;
 import edu.eci.arsw.game.model.Room;
 import edu.eci.arsw.game.persistence.room.RoomPersistenceException;
 import edu.eci.arsw.game.services.GameServices;
+import edu.eci.arsw.game.services.LoginServices;
 import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,7 +27,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class GameAPIController {
 
     private GameServices gameServices;
+    private LoginServices loginServices;
+
     private SimpMessagingTemplate msgt;
+    
+    /* GET METHODS */
     
     @RequestMapping(method = RequestMethod.GET, path = "/rooms")
     public ResponseEntity<?> getRooms() {
@@ -43,6 +48,30 @@ public class GameAPIController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
+    
+    @RequestMapping(method = RequestMethod.GET, path = "/rooms/{roomId}/players")
+    public ResponseEntity<?> getPlayers(@PathVariable int roomId) {
+        ArrayList<Player> result;
+        try {
+            result = gameServices.getPlayersOfRoom(roomId);
+            return new ResponseEntity<>(result, HttpStatus.ACCEPTED);
+        } catch(RoomPersistenceException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
+    }
+    
+    @RequestMapping(method = RequestMethod.GET, path = "/rooms/{roomId}/winner")
+    public ResponseEntity<?> getWinner(@PathVariable int roomId) {
+        Player result;
+        try {
+            result = gameServices.getWinnerOfRoom(roomId);
+            return new ResponseEntity<>(result, HttpStatus.ACCEPTED);
+        } catch(RoomPersistenceException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
+    }
+    
+    /*POST METHODS*/
 
     @RequestMapping(method = RequestMethod.POST, path = "/rooms")
     public ResponseEntity<?> registerNewRoom(@RequestBody Room room) {
@@ -54,17 +83,6 @@ public class GameAPIController {
         }
     }
 
-    @RequestMapping(method = RequestMethod.GET, path = "/rooms/{roomId}/players")
-    public ResponseEntity<?> getPlayers(@PathVariable int roomId) {
-        ArrayList<Player> result;
-        try {
-            result = gameServices.getPlayersOfRoom(roomId);
-            return new ResponseEntity<>(result, HttpStatus.ACCEPTED);
-        } catch(RoomPersistenceException e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
-        }
-    }
-
     @RequestMapping(method = RequestMethod.POST, path = "/rooms/{roomId}/players")
     public ResponseEntity<?> registerPlayer(@PathVariable int roomId, @RequestBody Player player) {
         try {
@@ -73,17 +91,6 @@ public class GameAPIController {
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
         }catch(RoomPersistenceException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.FORBIDDEN);
-        }
-    }
-
-    @RequestMapping(method = RequestMethod.GET, path = "/rooms/{roomId}/winner")
-    public ResponseEntity<?> getWinner(@PathVariable int roomId) {
-        Player result;
-        try {
-            result = gameServices.getWinnerOfRoom(roomId);
-            return new ResponseEntity<>(result, HttpStatus.ACCEPTED);
-        } catch(RoomPersistenceException e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
 
@@ -100,6 +107,8 @@ public class GameAPIController {
     public void sendStartMessage(int id) {
         msgt.convertAndSend("/topic/start." +  id,"Enough Players to Play.");
     }
+    
+    /* DEPENDENCY INJECTION */
 
     @Autowired
     public void setGameServices(GameServices gameServices) {
@@ -111,6 +120,9 @@ public class GameAPIController {
         this.msgt = msgt;
     }
     
-    
+    @Autowired
+    public void setLoginServices(LoginServices loginServices) {
+        this.loginServices = loginServices;
+    }
 
 }
