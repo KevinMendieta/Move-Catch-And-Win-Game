@@ -1,8 +1,8 @@
 export function createBackgroundLayer(background, level, tiles) {
 	const buffer = document.createElement("canvas"),
 		context = buffer.getContext("2d");
-	buffer.width = 540;
-	buffer.height = 405;
+	buffer.width = 832;
+	buffer.height = 416;
 	context.drawImage(background,0 ,0);
 
 	level.tiles.forEach((tile, x, y) => {

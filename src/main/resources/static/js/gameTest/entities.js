@@ -8,7 +8,7 @@ export function createPlayer() {
 	return loadSprites()
 	.then( sprites => {
 		const player = new Entity();
-		player.size.set(34, 40);
+		player.size.set(12, 16);
 		player.vel.set(0, 0);
 
 		player.addTrait(new Go());
