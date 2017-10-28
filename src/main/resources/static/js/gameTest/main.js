@@ -20,8 +20,8 @@ Promise.all([
 
 	input.listenTo(window);
 
-	["mousedown", "mousemove"].forEach(eventName => {
-		canvas.addEventListener(eventName, event =>{
+	(["mousedown", "mousemove"]).forEach(eventName => {
+		canvas.addEventListener(eventName, (event) => {
 			if (event.buttons === 1) {
 				player.vel.set(0, 0);
 				player.pos.set(event.offsetX, event.offsetY);

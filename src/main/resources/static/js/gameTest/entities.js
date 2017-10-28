@@ -6,7 +6,7 @@ import {loadSprites} from "./resources.js";
 
 export function createPlayer() {
 	return loadSprites()
-	.then( sprites => {
+	.then((sprites) => {
 		const player = new Entity();
 		player.size.set(12, 16);
 		player.vel.set(0, 0);

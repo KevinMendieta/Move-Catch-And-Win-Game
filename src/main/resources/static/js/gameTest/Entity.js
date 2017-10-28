@@ -27,7 +27,7 @@ export default class Entity {
 	}
 
 	update(deltaTime) {
-		this.traits.forEach(trait =>{
+		this.traits.forEach((trait) => {
 			trait.update(this, deltaTime);
 		});
 	}

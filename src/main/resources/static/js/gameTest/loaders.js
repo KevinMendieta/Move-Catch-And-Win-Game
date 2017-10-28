@@ -3,7 +3,7 @@ import {createBackgroundLayer, createSpriteLayer, createCoillisionLayer} from ".
 import {loadTiles, loadBackground} from "./resources.js";
 
 export function loadImage(url) {
-	return new Promise(resolve => {
+	return new Promise((resolve) => {
 		const image = new Image();
 		image.addEventListener("load", () =>{
 			resolve(image);
@@ -13,7 +13,7 @@ export function loadImage(url) {
 }
 
 function createTiles(level, backgrounds) {
-	backgrounds.forEach(background => {
+	backgrounds.forEach((background) => {
 		background.ranges.forEach(([x1, x2, y1, y2]) => {
 			for (let x = x1; x < x2; ++x) {
 	            for (let y = y1; y < y2; ++y) {

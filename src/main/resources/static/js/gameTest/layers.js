@@ -16,14 +16,14 @@ export function createBackgroundLayer(background, level, tiles) {
 
 export function createSpriteLayer(entities) {
 	return function drawSpriteLayer(context) {
-		entities.forEach(entity => {
+		entities.forEach((entity) => {
 			entity.draw(context);
 		});
 	};
 }
 
 export function createCoillisionLayer(level) {
-	const resolvedTiles = []
+	const resolvedTiles = [];
 
 	const tileResolver = level.tileCollider.tiles;
 	const tileSize = tileResolver.tileSize;
@@ -32,7 +32,7 @@ export function createCoillisionLayer(level) {
 	tileResolver.getByIndex = function getByIndexFake(x, y) {
 		resolvedTiles.push({x, y});
 		return getByIndexOriginal.call(tileResolver, x, y);
-	}
+	};
 
 	return function drawCollision(context) {
 		context.strokeStyle = "blue";
@@ -42,7 +42,7 @@ export function createCoillisionLayer(level) {
 			context.stroke();
 		});
 		context.strokeStyle = "red";
-		level.entities.forEach(entity => {
+		level.entities.forEach((entity) => {
 			context.beginPath();
 			context.rect(entity.pos.x, entity.pos.y, entity.size.x, entity.size.y);
 			context.stroke();

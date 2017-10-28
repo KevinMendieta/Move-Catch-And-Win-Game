@@ -10,10 +10,10 @@ export function setupKeyboard(entity) {
 			entity.jump.cancel();
 		}
 	});
-	input.addMapping("ArrowRight", keyState => {
+	input.addMapping("ArrowRight", (keyState) => {
 		entity.go.dir = keyState;
 	});
-	input.addMapping("ArrowLeft", keyState => {
+	input.addMapping("ArrowLeft", (keyState) => {
 		entity.go.dir = -keyState;
 	});
 
