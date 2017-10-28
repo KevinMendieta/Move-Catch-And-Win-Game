@@ -19,7 +19,7 @@ export default class TileCollider {
 			x,x,
 			entity.pos.y, entity.pos.y + entity.size.y);
 
-		matches.forEach(match => {
+		matches.forEach((match) => {
 			if (match.tile.name !== "wall") {
 				return;
 			}
@@ -50,7 +50,7 @@ export default class TileCollider {
 			entity.pos.x, entity.pos.x + entity.size.x,
 			y, y);
 
-		matches.forEach(match => {
+		matches.forEach((match) => {
 			if (match.tile.name !== "wall") {
 				return;
 			}

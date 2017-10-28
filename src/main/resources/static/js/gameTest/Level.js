@@ -17,7 +17,7 @@ export default class Level {
 
 
 	update(deltaTime) {
-		this.entities.forEach(entity => {
+		this.entities.forEach((entity) => {
 			entity.update(deltaTime);
 
 			entity.pos.x += entity.vel.x * deltaTime;

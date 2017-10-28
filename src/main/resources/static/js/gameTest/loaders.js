@@ -22,13 +22,12 @@ function createTiles(level, backgrounds) {
 	        }
 		});
 	});
-	
 }
 
 export function loadLevel(name) {
 	return Promise.all([
 		loadTiles(),
-		fetch(`/levels/${name}.json`).then(r => r.json()),
+		fetch(`/levels/${name}.json`).then((r) => r.json()),
 		loadBackground()
 	])
 	.then(([tiles, levelSpec, background]) => {
