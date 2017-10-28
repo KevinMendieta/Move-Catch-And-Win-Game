@@ -5,7 +5,7 @@ import {loadTiles, loadBackground} from "./resources.js";
 export function loadImage(url) {
 	return new Promise((resolve) => {
 		const image = new Image();
-		image.addEventListener("load", () =>{
+		image.addEventListener("load", () => {
 			resolve(image);
 		});
 		image.src = url;
@@ -17,9 +17,7 @@ function createTiles(level, backgrounds) {
 		background.ranges.forEach(([x1, x2, y1, y2]) => {
 			for (let x = x1; x < x2; ++x) {
 	            for (let y = y1; y < y2; ++y) {
-	                level.tiles.set(x, y, {
-	                	name : background.name
-	                });
+	                level.tiles.set(x, y, {name : background.name});
 	            }
 	        }
 		});

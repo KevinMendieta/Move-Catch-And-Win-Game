@@ -20,7 +20,7 @@ Promise.all([
 
 	input.listenTo(window);
 
-	(["mousedown", "mousemove"]).forEach(eventName => {
+	(["mousedown", "mousemove"]).forEach((eventName) => {
 		canvas.addEventListener(eventName, (event) => {
 			if (event.buttons === 1) {
 				player.vel.set(0, 0);
@@ -33,6 +33,6 @@ Promise.all([
 	timer.update = function update(deltaTime) {
 		level.update(deltaTime);
 		level.comp.draw(context);
-	}
+	};
 	timer.start();
 });

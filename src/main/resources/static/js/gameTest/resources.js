@@ -3,7 +3,7 @@ import {loadImage} from "./loaders.js";
 
 export function loadSprites() {
 	return loadImage("/img/sprites.png")
-	.then(image => {
+	.then((image) => {
 		const sprites = new SpriteSheet(image, 12, 16);
 		sprites.defineTile("firstPlayer", 0, 0);
 		return sprites;
@@ -12,7 +12,7 @@ export function loadSprites() {
 
 export function loadTiles() {
 	return loadImage("/img/tiles.png")
-	.then(image => {
+	.then((image) => {
 		const tiles = new SpriteSheet(image, 32, 32);
 		tiles.defineTile("wall", 0, 0);
 		tiles.defineTile("block", 1, 0);

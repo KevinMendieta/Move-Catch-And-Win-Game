@@ -17,7 +17,7 @@ export function createPlayer() {
 
 		player.draw = function drawPlayer(context) {
 			sprites.draw("firstPlayer", context, this.pos.x, this.pos.y);
-		}
+		};
 		return player;
 	});
 }
