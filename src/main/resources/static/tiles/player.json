@@ -1,0 +1,21 @@
+{
+	"imageURL" : "/img/sprites.png",
+	"frames" : [
+		{
+			"name" : "quiet",
+			"rect" : [0, 0, 12, 16]
+		},
+		{
+			"name" : "run_1",
+			"rect" : [12, 0, 12, 16]
+		},
+		{
+			"name" : "run_2",
+			"rect" : [24, 0, 12, 16]
+		},
+		{
+			"name" : "jump",
+			"rect" : [36, 0, 12, 16]
+		}
+	]
+}

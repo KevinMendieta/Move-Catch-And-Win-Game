@@ -1,0 +1,20 @@
+{
+	"imageURL" : "/img/tiles.png",
+	"tileW" : 32,
+	"tileH" : 32,
+
+	"tiles" : [
+		{
+			"name" : "wall",
+			"index" : [0, 0]
+		},
+		{
+			"name" : "block",
+			"index" : [1, 0]
+		},
+		{
+			"name" : "air",
+			"index" : [2, 0]
+		}
+	]
+}
