@@ -13,7 +13,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
         <link rel="stylesheet" href="stylesheets/main.css" />
         <noscript><link rel="stylesheet" href="stylesheets/noscript.css" /></noscript>
-        <script src="js/game/loginServices.js"></script>
+        <script src="js/persistence/loginServices.js"></script>
     </head>
 
     <body class="is-loading">
@@ -24,7 +24,7 @@
                 <section class="post">
                     <h2>Sign-Up user</h2>
 
-                    <form method="get" action="" class="alt">
+                    <form class="alt">
                         <div class="row uniform">
                             <div class="6u 12u$(xsmall)">
                                 <input type="text" name="nickName" id="nickName" value="" placeholder="Nick Name" />
@@ -43,7 +43,7 @@
                             <!-- Break -->
                             <div class="12u$">
                                 <ul class="actions">
-                                    <li><button type="submit" class="special" onclick="loginServices.signUp()">Register</button></li>
+                                    <li><button class="special" onclick="loginServices.signUp()">Register</button></li>
                                     <li><input type="reset" value="Reset" /></li>
                                 </ul>
                             </div>
