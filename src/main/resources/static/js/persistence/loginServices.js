@@ -37,6 +37,7 @@ var loginServices = (function () {
             }).fail( function (data){
                 console.log(data);
             });
+            alert("logged");
         }
     };
 
