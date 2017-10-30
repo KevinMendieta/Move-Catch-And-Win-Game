@@ -24,7 +24,10 @@ public class MoveCatchAndWinApiApplication {
     @Bean
     public Realm realm() {
         TextConfigurationRealm realm = new TextConfigurationRealm();
-        realm.setUserDefinitions("prueba=prueba, user\nadmin=admin, admin");
+        realm.setUserDefinitions("prueba=prueba,user\n" + "admin=admin,admin");
+        realm.setRoleDefinitions("admin=read,write\n" +
+                                 "user=read");
+        realm.setCachingEnabled(true);
         return realm;
     }
 

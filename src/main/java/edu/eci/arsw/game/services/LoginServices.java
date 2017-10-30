@@ -9,17 +9,29 @@ import edu.eci.arsw.game.model.User;
 import edu.eci.arsw.game.persistence.user.UserPersistence;
 import edu.eci.arsw.game.persistence.user.UserPersistenceException;
 import java.util.Map;
+import javax.annotation.PostConstruct;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.IncorrectCredentialsException;
+import org.apache.shiro.authc.UnknownAccountException;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import org.apache.shiro.mgt.SecurityManager;
 
 /**
  *
  * @author Zekkenn
  */
 @Service
+@Component
 public class LoginServices {
     
     private UserPersistence userPersistence;
+
+    @Autowired
+    private SecurityManager securityManager;
 
     @Autowired
     public void setUserPersistence(UserPersistence userPersistence) {
@@ -49,8 +61,8 @@ public class LoginServices {
      * Return the current id of the last user
      * @return The current id. 
      */
-    public int getCurrentId(){
-        return userPersistence.getCurrentId();
+    public int getNextId(){
+        return userPersistence.getNextId();
     }
     
     /**
@@ -59,6 +71,41 @@ public class LoginServices {
      */
     public Map<Integer, User> getAllUsers(){
         return userPersistence.getAllUsers();
+    }
+    
+    /**
+     * Return All users
+     * @return All users. 
+     * @throws UserPersistenceException 
+     */
+    public User getCurrentUser() throws UserPersistenceException{
+        Subject subject = SecurityUtils.getSubject();
+        return userPersistence.getUserByNickname( (String) subject.getPrincipal() );
+    }
+    
+    /**
+     * Login the user
+     * @param user the user
+     * @throws UserPersistenceException if there is an user logged
+     */
+    public void login(User user) throws UserPersistenceException{
+        Subject subject = SecurityUtils.getSubject();
+        if ( subject.isAuthenticated() ) throw new UserPersistenceException("There exists an authenticated user.");
+        UsernamePasswordToken token = new UsernamePasswordToken(user.getNickname(), user.getPassword());
+        token.setRememberMe(true);
+        try {
+            subject.login(token);
+        } catch ( IncorrectCredentialsException | UnknownAccountException  ex ){
+            throw new UserPersistenceException("Password didn't match, try again.");
+        }
+    }
+    
+    /**
+     * Sets the static instance of SecurityManager. This is NOT needed for web applications.
+     */
+    @PostConstruct
+    private void initStaticSecurityManager() {
+        SecurityUtils.setSecurityManager(securityManager);
     }
     
 }

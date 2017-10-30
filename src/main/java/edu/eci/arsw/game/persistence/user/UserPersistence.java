@@ -5,17 +5,15 @@
  */
 package edu.eci.arsw.game.persistence.user;
 
-import edu.eci.arsw.game.model.Player;
-import edu.eci.arsw.game.model.Room;
 import edu.eci.arsw.game.model.User;
-import edu.eci.arsw.game.persistence.user.UserPersistenceException;
-import java.util.ArrayList;
 import java.util.Map;
+import org.springframework.stereotype.Component;
 
 /**
  *
  * @author Zekkenn
  */
+@Component
 public interface UserPersistence {
     
     
@@ -35,10 +33,18 @@ public interface UserPersistence {
     public User getUser(int id) throws UserPersistenceException;
     
     /**
-     * Return the current id of the last user
-     * @return The current id. 
+     * Return a user, is consulted by the unique id
+     * @param id the user's nickname
+     * @return The user corresponding to these id. 
+     * @throws UserPersistenceException If there's not user associated with the id.
      */
-    public int getCurrentId();
+    public User getUserByNickname(String nickName) throws UserPersistenceException;
+    
+    /**
+     * Return the next id of the last user
+     * @return The next id. 
+     */
+    public int getNextId();
     
     /**
      * Return All users

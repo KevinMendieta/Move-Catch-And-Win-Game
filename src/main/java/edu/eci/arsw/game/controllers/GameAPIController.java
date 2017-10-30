@@ -8,6 +8,8 @@ import edu.eci.arsw.game.persistence.user.UserPersistenceException;
 import edu.eci.arsw.game.services.GameServices;
 import edu.eci.arsw.game.services.LoginServices;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -78,8 +80,29 @@ public class GameAPIController {
         return new ResponseEntity<>(loginServices.getAllUsers(), HttpStatus.ACCEPTED);
     }
     
+    @RequestMapping(method = RequestMethod.GET, path = "/loggedUser")
+    public ResponseEntity<?> getLoggedUser(){
+        try {
+            return new ResponseEntity<>(loginServices.getCurrentUser(), HttpStatus.ACCEPTED);
+        } catch (UserPersistenceException ex) {
+            return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
+        }
+    }
+    
+    
     /*POST METHODS*/
 
+    @RequestMapping(method = RequestMethod.POST, path = "/login")
+    public ResponseEntity<?> login(@RequestBody User user){
+        try {
+            loginServices.login(user);
+            System.out.println(loginServices.getCurrentUser());
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        } catch (UserPersistenceException ex) {
+            return new ResponseEntity<>(ex.getMessage(), HttpStatus.FORBIDDEN);
+        }
+    }
+    
     @RequestMapping(method = RequestMethod.POST, path = "/rooms")
     public ResponseEntity<?> registerNewRoom(@RequestBody Room room) {
         try {
@@ -111,14 +134,13 @@ public class GameAPIController {
         }
     }
     
-    @RequestMapping(method = RequestMethod.POST, path = "/users")
+    @RequestMapping(method = RequestMethod.POST, path = "/user")
     public ResponseEntity<?> addNewUser(@RequestBody User usr){
         
         try {
-            usr.setId(loginServices.getCurrentId());
+            usr.setId(loginServices.getNextId());
             loginServices.registerNewUser(usr);
-
-            return new ResponseEntity<>(HttpStatus.CREATED);
+            return new ResponseEntity<>("", HttpStatus.CREATED);
         } catch (UserPersistenceException ex) {
 
             return new ResponseEntity<>(ex.getMessage(), HttpStatus.FORBIDDEN); 

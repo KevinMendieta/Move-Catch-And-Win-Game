@@ -20,13 +20,15 @@ import org.springframework.stereotype.Service;
 public class InMemoryUserPersistence implements UserPersistence{
     
     private final Map<Integer, User> users = new ConcurrentHashMap<>();
+    private final Map<String, User> nicks = new ConcurrentHashMap<>();
 
     @Override
     public void registerNewUser(User user) throws UserPersistenceException {
-        if ( users.containsKey(user.getId()) ) 
+        if ( users.containsKey(user.getId()) || nicks.containsKey(user.getNickname()) ) 
             throw new UserPersistenceException("User already registered.");
-        else
-            users.put(user.getId(), user);
+        else {
+            users.put(user.getId(), user); nicks.put(user.getNickname(), user);
+        }
     }
 
     @Override
@@ -38,13 +40,23 @@ public class InMemoryUserPersistence implements UserPersistence{
     }
 
     @Override
-    public int getCurrentId() {
+    public int getNextId() {
         return users.size();
     }
 
     @Override
     public Map<Integer, User> getAllUsers() {
         return users;
+    }
+
+    @Override
+    public User getUserByNickname(String nickName) throws UserPersistenceException {
+        System.out.println("------------------------------ Wellcome: "+nickName+" ------------------------------");
+        if ( nickName == null ) throw new UserPersistenceException("User not found.");
+        if ( !nicks.containsKey(nickName) )
+            throw new UserPersistenceException("User not found.");
+        else
+            return nicks.get(nickName);
     }
     
 }

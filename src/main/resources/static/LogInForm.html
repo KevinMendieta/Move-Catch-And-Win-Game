@@ -13,6 +13,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
         <link rel="stylesheet" href="stylesheets/main.css" />
         <noscript><link rel="stylesheet" href="stylesheets/noscript.css" /></noscript>
+        <script src="/webjars/jquery/jquery.min.js"></script>
+        <script src="/webjars/sockjs-client/sockjs.min.js"></script>
+        <script src="/webjars/stomp-websocket/stomp.min.js"></script>
         <script src="js/persistence/loginServices.js"></script>
     </head>
 
@@ -35,9 +38,11 @@
                             </div>
                             
                             <!-- Break -->
-                            <div class="12u$">
+                            <div class="2.u 2u$(xsmall)">
+                                <button type="button" class="special" onclick="loginServices.signIn()">Sign-In</button>
+                            </div>
+                            <div class="2u $2u$(xsmall)">
                                 <ul class="actions">
-                                    <li><button class="special" onclick="loginServices.signUp()">Sign-In</button></li>
                                     <li><input type="reset" value="Reset" /></li>
                                 </ul>
                             </div>
