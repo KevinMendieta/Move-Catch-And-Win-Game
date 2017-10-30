@@ -10,6 +10,7 @@ import edu.eci.arsw.game.model.Room;
 import edu.eci.arsw.game.model.User;
 import edu.eci.arsw.game.persistence.user.UserPersistenceException;
 import java.util.ArrayList;
+import java.util.Map;
 
 /**
  *
@@ -32,6 +33,18 @@ public interface UserPersistence {
      * @throws UserPersistenceException If there's not user associated with the id.
      */
     public User getUser(int id) throws UserPersistenceException;
+    
+    /**
+     * Return the current id of the last user
+     * @return The current id. 
+     */
+    public int getCurrentId();
+    
+    /**
+     * Return All users
+     * @return All users. 
+     */
+    public Map<Integer, User> getAllUsers();
 
     
 }

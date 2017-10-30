@@ -32,7 +32,7 @@ public class MoveCatchAndWinApiApplication {
     public ShiroFilterChainDefinition shiroFilterChainDefinition() {
         DefaultShiroFilterChainDefinition chainDefinition = new DefaultShiroFilterChainDefinition();
         // use permissive to NOT require authentication, our controller Annotations will decide that
-        chainDefinition.addPathDefinition("/**", "authcBasic[permissive]");
+        chainDefinition.addPathDefinition("/**", "authcBasic");
         return chainDefinition;
     }
 }

@@ -2,7 +2,9 @@ package edu.eci.arsw.game.controllers;
 
 import edu.eci.arsw.game.model.Player;
 import edu.eci.arsw.game.model.Room;
+import edu.eci.arsw.game.model.User;
 import edu.eci.arsw.game.persistence.room.RoomPersistenceException;
+import edu.eci.arsw.game.persistence.user.UserPersistenceException;
 import edu.eci.arsw.game.services.GameServices;
 import edu.eci.arsw.game.services.LoginServices;
 import java.util.ArrayList;
@@ -71,6 +73,11 @@ public class GameAPIController {
         }
     }
     
+    @RequestMapping(method = RequestMethod.GET, path = "/users")
+    public ResponseEntity<?> getAllUsers(){
+        return new ResponseEntity<>(loginServices.getAllUsers(), HttpStatus.ACCEPTED);
+    }
+    
     /*POST METHODS*/
 
     @RequestMapping(method = RequestMethod.POST, path = "/rooms")
@@ -102,6 +109,21 @@ public class GameAPIController {
         }catch(RoomPersistenceException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.FORBIDDEN);
         }
+    }
+    
+    @RequestMapping(method = RequestMethod.POST, path = "/users")
+    public ResponseEntity<?> addNewUser(@RequestBody User usr){
+        
+        try {
+            usr.setId(loginServices.getCurrentId());
+            loginServices.registerNewUser(usr);
+
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        } catch (UserPersistenceException ex) {
+
+            return new ResponseEntity<>(ex.getMessage(), HttpStatus.FORBIDDEN); 
+        }
+        
     }
     
     public void sendStartMessage(int id) {

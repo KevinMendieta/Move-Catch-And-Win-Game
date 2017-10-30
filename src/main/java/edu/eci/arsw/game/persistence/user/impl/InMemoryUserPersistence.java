@@ -36,5 +36,15 @@ public class InMemoryUserPersistence implements UserPersistence{
         else
             return users.get(id);
     }
+
+    @Override
+    public int getCurrentId() {
+        return users.size();
+    }
+
+    @Override
+    public Map<Integer, User> getAllUsers() {
+        return users;
+    }
     
 }

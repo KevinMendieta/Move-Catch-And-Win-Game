@@ -8,6 +8,7 @@ package edu.eci.arsw.game.services;
 import edu.eci.arsw.game.model.User;
 import edu.eci.arsw.game.persistence.user.UserPersistence;
 import edu.eci.arsw.game.persistence.user.UserPersistenceException;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -42,6 +43,22 @@ public class LoginServices {
      */
     public User getUser(int id) throws UserPersistenceException{
         return userPersistence.getUser(id);
+    }
+    
+    /**
+     * Return the current id of the last user
+     * @return The current id. 
+     */
+    public int getCurrentId(){
+        return userPersistence.getCurrentId();
+    }
+    
+    /**
+     * Return All users
+     * @return All users. 
+     */
+    public Map<Integer, User> getAllUsers(){
+        return userPersistence.getAllUsers();
     }
     
 }
