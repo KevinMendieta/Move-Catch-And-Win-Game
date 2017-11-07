@@ -117,7 +117,8 @@ public class GameAPIController {
     public ResponseEntity<?> registerPlayer(@PathVariable int roomId, @RequestBody Player player) {
         try {
             gameServices.registerPlayerInRoom(roomId, player);
-            if(gameServices.getRoom(roomId).getPlayers().size() > 2) sendStartMessage(roomId);
+            newPlayer(roomId);
+            if(gameServices.getRoom(roomId).getPlayers().size() > 1) sendStartMessage(roomId);
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
         }catch(RoomPersistenceException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.FORBIDDEN);
@@ -148,8 +149,12 @@ public class GameAPIController {
         
     }
     
+    public void newPlayer(int id) {
+        msgt.convertAndSend("/topic/players." +  id, "New player.");
+    }
+    
     public void sendStartMessage(int id) {
-        msgt.convertAndSend("/topic/start." +  id,"Enough Players to Play.");
+        msgt.convertAndSend("/topic/start." +  id, "Enough Players to Play.");
     }
     
     /* DEPENDENCY INJECTION */

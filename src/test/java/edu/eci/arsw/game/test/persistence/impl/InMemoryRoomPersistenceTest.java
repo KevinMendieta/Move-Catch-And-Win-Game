@@ -17,7 +17,7 @@ public class InMemoryRoomPersistenceTest {
     @Test
     public void registerNewAndGetRoomTest() throws RoomPersistenceException {
         RoomPersistence roomPersistence = new InMemoryRoomPersistence();
-        Room firstRoom = new Room(1);
+        Room firstRoom = new Room(1, 3);
         Player firstPlayer = new Player("kevin");
         firstRoom.addPlayer(firstPlayer);
         firstRoom.setWinner(firstPlayer);
@@ -28,7 +28,7 @@ public class InMemoryRoomPersistenceTest {
     @Test
     public void registerExistingRoom() {
         RoomPersistence roomPersistence = new InMemoryRoomPersistence();
-        Room firstRoom = new Room(1);
+        Room firstRoom = new Room(1, 3);
         Player firstPlayer = new Player("kevin");
         firstRoom.addPlayer(firstPlayer);
         firstRoom.setWinner(firstPlayer);
@@ -48,7 +48,7 @@ public class InMemoryRoomPersistenceTest {
     @Test
     public void registerPlayerAndGetPlayersTest() throws RoomPersistenceException {
         RoomPersistence roomPersistence = new InMemoryRoomPersistence();
-        Room firstRoom = new Room(1);
+        Room firstRoom = new Room(1,3);
         Player firstPlayer = new Player("kevin");
         firstRoom.addPlayer(firstPlayer);
         roomPersistence.registerNewRoom(firstRoom);
@@ -61,7 +61,7 @@ public class InMemoryRoomPersistenceTest {
     @Test
     public void registerWinnerAndGetWinnerTest() throws RoomPersistenceException {
         RoomPersistence roomPersistence = new InMemoryRoomPersistence();
-        Room firstRoom = new Room(1);
+        Room firstRoom = new Room(1, 3);
         Player firstPlayer = new Player("kevin");
         firstRoom.addPlayer(firstPlayer);
         roomPersistence.registerNewRoom(firstRoom);

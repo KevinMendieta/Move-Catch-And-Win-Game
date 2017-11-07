@@ -1,29 +1,24 @@
 //@author KevinMendieta
 // Handler of subscriptions and messages.
-/* global Stomp, roomId, endGame, startEvent, putPlayers, movePlayer */
 
-var stompClient;
-
-function subscribeRoom() {
-	var socket = new SockJS("/stompendpoint");
-	stompClient = Stomp.over(socket);
-	stompClient.connect({}, function(frame) {
-		stompClient.subscribe("/topic/start." +  roomId, startEvent);
-		stompClient.subscribe("/topic/winner." +  roomId, endGame);
-		let player = {"nickName": name};
-		connectRoom(player, putPlayers);
+export function getStompClient() {
+	return new Promise((resolve) => {
+		const socket = new SockJS("/stompendpoint");
+		const stompClient = Stomp.over(socket);
+		stompClient.connect({}, function(frame) {
+			resolve(stompClient);
+		});
 	});
 }
 
-function subscribePlayers(players) {
+export function subscribeTopic(stompClient, topicPrefix, callback) {
+	stompClient.subscribe(topicPrefix, callback);
+}
+
+function subscribeToAllPlayers(players, callback) {
 	var socket = new SockJS("/stompendpoint");
 	stompClient = Stomp.over(socket);
 	stompClient.connect({}, function(frame) {
-		for (let i = 0; i < players.length; i++) {
-			if (players[i].nickName !== name) {
-				stompClient.subscribe("/topic/room" + roomId + "." + players[i].nickName, movePlayer);
-			}
-		}
-		init();
+		
 	});
 }

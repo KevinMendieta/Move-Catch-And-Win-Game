@@ -12,18 +12,14 @@
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<script src="/webjars/sockjs-client/sockjs.min.js"></script>
-                <script src="/webjars/stomp-websocket/stomp.min.js"></script>
+		<script src="/webjars/stomp-websocket/stomp.min.js"></script>
 		<script src="/webjars/jquery/jquery.min.js"></script>
-                <script src="/webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-                <script src="js/game/api.js"></script>
-		<script src="js/game/domEditor.js"></script>
-		<script src="js/game/stompHandler.js"></script>
-		<script src="js/game/main.js"></script>	
+		<script type="module" src="js/game/main.js"></script>	
 		<link rel="stylesheet" href="stylesheets/main.css" />
-		<noscript><link rel="stylesheet" href="stylesheets/noscript.css" /></noscript>
+		<noscript><link rel="stylesheet" href="stylesheets/noscript.css"/></noscript>
 	</head>
 
-	<body class="is-loading" onload="loadRooms()">
+	<body class="is-loading">
 
 		<div id="wrapper" class="fade-in">
 
@@ -32,16 +28,22 @@
 					<header class="major">
 						<h1>Move! Catch! Win!</h1>
 						<p>Select a room to start playing!</p>
+						<p>Click refresh rooms button to see all the current rooms!</p>
 						<div class="row uniform">
 							<h3>Current Rooms!</h3>
-							<ul id="roomInfo"></ul>	
+							<ul id="roomInfo"></ul>
+						</div>
+						<div class="row uniform">
+							<div class="6u$ 12u$(xsmall)">
+								<a id="refreshButton" class="button fit">Refresh Rooms</a>
+							</div>
 						</div>
 						<div class="row uniform">
 							<div class="6u 12u$(xsmall)">
-								<input type="text" name="demo-name" id="demo-name" value="" placeholder="Room Id" />
+								<input id="roomId" type="text" placeholder="Room Id"/>
 							</div>
 							<div class="6u$ 12u$(xsmall)">
-								<a class="button fit" onclick="connectButton(document.getElementById('demo-name').value)">GO!</a>
+								<a id="subscribeButton" class="button fit">GO!</a>
 							</div>
 						</div>
 						<div class="row uniform">

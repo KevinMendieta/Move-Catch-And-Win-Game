@@ -8,13 +8,14 @@ import java.util.ArrayList;
  */
 public class Room {
 
-    private int id;
+    private int id, capacity;
     private Player winner;
     private ArrayList<Player> players;
 
-    public Room(int id) {
+    public Room(int id, int capacity) {
         this.players = new ArrayList<>();
         this.id = id;
+        this.capacity = capacity;
     }
     
     public Room() {}
@@ -54,6 +55,13 @@ public class Room {
      */
     public ArrayList<Player> getPlayers() {
         return players;
+    }
+    
+    /**
+     * @return return the capacity of the room.
+     */    
+    public int getCapacity() {
+        return capacity;
     }
 
 }

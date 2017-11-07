@@ -21,7 +21,8 @@ public interface RoomPersistence {
      * Register a player in a room.
      * @param id The id of the room.
      * @param player The player to register.
-     * @throws RoomPersistenceException if the room does not exists.
+     * @throws RoomPersistenceException if the room does not exists, the capacity of the room is exceed,
+     * the player already is on the room.
      */
     public void registerPlayerInRoom(int id, Player player) throws RoomPersistenceException;
 

@@ -1,26 +1,22 @@
-/* global roomId */
-
 //@author KevinMendieta
 //Handler of the RESTFul API
 
-function getAllRooms(callback) {
+export function getAllRooms(callback) {
 	$.get("/rooms", callback);
 }
 
-function getPlayersRoom(callback) {
+export function getPlayersRoom(roomId, callback) {
 	$.get("/rooms/" + roomId + "/players", callback);
 }
 
-function connectRoom(player, callback) {
+export function enterRoom(roomId, player) {
 	$.ajax({
 		url : "/rooms/" + roomId + "/players",
 		type : "POST",
 		data : JSON.stringify(player),
 		contentType: "application/json"
 	}).then(
-		function(){
-			$.get("/rooms/" + roomId + "/players", callback);
-		},
+		function(){},
 		function(response){
 			alert(response.responseText);
 		}

@@ -20,9 +20,7 @@ public class InMemoryRoomPersistence implements RoomPersistence{
     public InMemoryRoomPersistence() {
         Player firstPlayer = new Player("Sebastian");
         Player secondPlayer = new Player("Esteban");
-        Room room = new Room(0);
-        room.addPlayer(firstPlayer);
-        room.addPlayer(secondPlayer);
+        Room room = new Room(0, 2);
         rooms.put(0, room);
     }
     
