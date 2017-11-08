@@ -18,9 +18,11 @@ export function putPlayers(players) {
 }
 
 export function putCanvas(width, height) {
-	var content = "<canvas id=" + '"screen"' 
-	+ ' width="' + width + '" height="' + height + 
-	'" style=' + '"border:1px solid #d3d3d3;">';
-	console.log(content);
+	var content = "<canvas id=" + str("screen") + " width=" + str(width) + 
+	" height=" + str(height) + "></canvas>";
 	$("#gameCanvas").append(content);
+}
+
+function str(token) {
+	return '"' + token + '"'
 }

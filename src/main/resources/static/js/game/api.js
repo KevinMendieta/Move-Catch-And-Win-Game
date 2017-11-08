@@ -5,8 +5,8 @@ export function getAllRooms(callback) {
 	$.get("/rooms", callback);
 }
 
-export function getPlayersRoom(roomId, callback) {
-	$.get("/rooms/" + roomId + "/players", callback);
+export function getPlayersRoom(roomId) {
+	return $.get("/rooms/" + roomId + "/players");
 }
 
 export function enterRoom(roomId, player) {
