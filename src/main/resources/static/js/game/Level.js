@@ -19,16 +19,18 @@ export default class Level {
 
 	update(deltaTime) {
 		this.entities.forEach((entity) => {
-			entity.update(deltaTime);
+			if (entity.name === "local") {
+				entity.update(deltaTime);
 			
 
-			entity.pos.x += entity.vel.x * deltaTime;
-			this.tileCollider.checkX(entity);
+				entity.pos.x += entity.vel.x * deltaTime;
+				this.tileCollider.checkX(entity);
 
-			entity.pos.y += entity.vel.y * deltaTime;
-			this.tileCollider.checkY(entity);
+				entity.pos.y += entity.vel.y * deltaTime;
+				this.tileCollider.checkY(entity);
 
-			entity.vel.y += this.gravity * deltaTime;
+				entity.vel.y += this.gravity * deltaTime;
+			}
 		});
 		this.totalTime += deltaTime;
 	}

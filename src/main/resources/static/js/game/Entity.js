@@ -11,13 +11,9 @@ export class Trait {
 		this.NAME = name;
 	}
 
-	obstruct() {
+	obstruct() {}
 
-	}
-
-	update() {
-		console.warn("UnImplemented!!");
-	}
+	update() {}
 }
 
 export default class Entity {

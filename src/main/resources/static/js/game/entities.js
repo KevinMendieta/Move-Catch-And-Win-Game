@@ -8,6 +8,8 @@ export function createPlayer() {
 	return loadSpriteSheet("player")
 	.then((sprites) => {
 		const player = new Entity();
+		player.name = "local";
+		player.pos.set(45, 45);
 		player.size.set(12, 16);
 		player.vel.set(0, 0);
 
@@ -22,11 +24,38 @@ export function createPlayer() {
 			} else if (player.go.dir !== 0) {
 				animation = runAnimation(player.go.distance);
 			}
+			player.anim = animation;
 			return animation;
 		}
 
 		player.draw = function drawPlayer(context) {
 			sprites.draw(routeFrame(this), context, this.pos.x, this.pos.y, this.go.heading < 0);
+		};
+
+		return player;
+	});
+}
+
+export function createOnlinePlayer() {
+	return loadSpriteSheet("player")
+	.then((sprites) => {
+		const player = new Entity();
+		player.name = "online";
+		player.pos.set(45, 45);
+		player.anim = "quiet";
+		player.heading = false;
+
+		player.update = function updateProxy(deltaTime) {};
+
+		player.updateOnline = function updateOnlinePlayer(eventMessage) {
+			const content = JSON.parse(eventMessage.body);
+			player.pos.set(content.x, content.y);
+			player.anim = content.anim;
+			player.heading = content.heading;
+		};
+
+		player.draw = function drawPlayer(context) {
+			sprites.draw(this.anim, context, this.pos.x, this.pos.y, this.heading);
 		};
 
 		return player;

@@ -7,7 +7,7 @@ import {getStompClient, subscribeTopic} from "./stompHandler.js";
 // Game Stuff
 import Timer from "./Timer.js";
 import {loadLevel} from "./loaders.js";
-import {createPlayer} from "./entities.js";
+import {createPlayer, createOnlinePlayer} from "./entities.js";
 import {setupKeyboard} from "./input.js";
 // import {setupMouseControl} from "./debug.js";
 
@@ -43,29 +43,28 @@ function init(eventMessage) {
 	putCanvas(832, 416);
 	canvas = document.getElementById("screen");
 	context = canvas.getContext("2d");
-	getPlayersRoom(roomId)
-	.then((players) => Promise.all([
-		players,
+	Promise.all([
+		getPlayersRoom(roomId),
 		createPlayer(),
-		loadLevel("default")
-	]))
-	.then(([players, player, level]) => {
+		loadLevel("default"),
+		createOnlinePlayer(),
+		createOnlinePlayer(),
+		createOnlinePlayer()
 
-		function loadOnlinePlayer(eventMessage) {
-			console.log(eventMessage.body);
-		}
+	])
+	.then(([players, player, level, p1, p2, p3]) => {
+		level.entities.add(player);
 
+		const onlinePlayers = [p1, p2, p3];
+		var index = 0;
 		players.forEach((ply) => {
 			if (ply.nickName !== name) {
-				subscribeTopic(stompClient, "/topic/" + roomId + "." + ply.nickName, loadOnlinePlayer);
+				subscribeTopic(stompClient, "/topic/" +  roomId + "." + ply.nickName, onlinePlayers[index].updateOnline);
+				level.entities.add(onlinePlayers[index]);
+				index++;
 			}
 		});
-
-		player.pos.set(45, 45);
-
-		stompClient.send("/topic/" + roomId + "." + name, {}, JSON.stringify(player));
-
-		level.entities.add(player);
+		
 
 		const input = setupKeyboard(player);
 
@@ -76,6 +75,8 @@ function init(eventMessage) {
 		timer.update = function update(deltaTime) {
 			level.update(deltaTime);
 			level.comp.draw(context);
+			const data = {x : player.pos.x, y : player.pos.y, anim:player.anim, heading : player.go.heading < 0};
+			stompClient.send("/topic/" +  roomId + "." + name, {}, JSON.stringify(data));
 		};
 		timer.start();
 	});
@@ -86,5 +87,5 @@ function updateCurrentPlayers(eventMessage) {
 }
 
 function endGame(eventMessage) {
-	console.log(eventMessage);
+	//console.log(eventMessage);
 }
