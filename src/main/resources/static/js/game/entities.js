@@ -5,7 +5,7 @@ import {loadSpriteSheet} from "./loaders.js";
 import {createAnimation} from "./animation.js";
 
 export function createPlayer() {
-	return loadSpriteSheet("player")
+	return loadSpriteSheet("player1")
 	.then((sprites) => {
 		const player = new Entity();
 		player.name = "local";
