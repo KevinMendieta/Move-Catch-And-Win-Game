@@ -118,7 +118,8 @@ public class GameAPIController {
         try {
             gameServices.registerPlayerInRoom(roomId, player);
             newPlayer(roomId);
-            if(gameServices.getRoom(roomId).getPlayers().size() > 1) sendStartMessage(roomId);
+            Room currentRoom = gameServices.getRoom(roomId);
+            if(currentRoom.getPlayers().size() >= currentRoom.getCapacity()) sendStartMessage(roomId);
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
         }catch(RoomPersistenceException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.FORBIDDEN);

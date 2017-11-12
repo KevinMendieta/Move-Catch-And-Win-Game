@@ -21,6 +21,19 @@ public class Room {
     public Room() {}
 
     /**
+     * Checks if a player is already on the room
+     * @param player the player
+     * @return true if the player is on room otherwise false
+     */
+    public boolean containsPlayer(Player player) {
+        boolean found = false;
+        for (int i = 0; i < players.size() && !found; i++) {
+            found = player.getNickName().equals(players.get(i).getNickName());
+        }
+        return found;
+    }
+
+    /**
      * Sets the winner of the room.
      * @param winner The player who is a winner.
      */

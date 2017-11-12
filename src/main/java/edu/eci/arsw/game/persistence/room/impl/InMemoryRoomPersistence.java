@@ -18,10 +18,12 @@ public class InMemoryRoomPersistence implements RoomPersistence{
     private final Map<Integer, Room> rooms = new ConcurrentHashMap<>();
     
     public InMemoryRoomPersistence() {
-        Player firstPlayer = new Player("Sebastian");
-        Player secondPlayer = new Player("Esteban");
         Room room = new Room(0, 2);
         rooms.put(0, room);
+        room = new Room(11, 3);
+        rooms.put(11, room);
+        room = new Room(22, 4);
+        rooms.put(22, room);
     }
     
     @Override
@@ -35,11 +37,10 @@ public class InMemoryRoomPersistence implements RoomPersistence{
 
     @Override
     public void registerPlayerInRoom(int id, Player player) throws RoomPersistenceException {
-        if (!rooms.containsKey(id)) {
-            throw new RoomPersistenceException("The room " + id + " does not exist.");
-        }else {
-            rooms.get(id).addPlayer(player);
-        }
+        if (!rooms.containsKey(id)) throw new RoomPersistenceException("The room " + id + " does not exist.");
+        if (rooms.get(id).getCapacity() < rooms.get(id).getPlayers().size() + 1) throw new RoomPersistenceException("The room " + id + " is full.");
+        if (rooms.get(id).containsPlayer(player)) throw new RoomPersistenceException("The player " + player.getNickName() + " is already on room.");
+        rooms.get(id).addPlayer(player);
     }
 
     @Override

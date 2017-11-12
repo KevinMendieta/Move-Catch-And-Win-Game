@@ -69,4 +69,34 @@ public class InMemoryRoomPersistenceTest {
         assertEquals("The previously stored room is different", firstRoom.getWinner(), roomPersistence.getWinnerOfRoom(1));
     }
 
+    @Test
+    public void fullRoomTest() throws RoomPersistenceException {
+        RoomPersistence roomPersistence = new InMemoryRoomPersistence();
+        Room firstRoom = new Room(1, 1);
+        Player firstPlayer = new Player("kevin");
+        try {
+            roomPersistence.registerNewRoom(firstRoom);
+            roomPersistence.registerPlayerInRoom(1, firstPlayer);
+            roomPersistence.registerPlayerInRoom(1, firstPlayer);
+            fail();
+        } catch (RoomPersistenceException e) {
+
+        }
+    }
+
+    @Test
+    public void duplicatedPlayerTest() {
+        RoomPersistence roomPersistence = new InMemoryRoomPersistence();
+        Room firstRoom = new Room(1, 2);
+        Player firstPlayer = new Player("kevin");
+        try {
+            roomPersistence.registerNewRoom(firstRoom);
+            roomPersistence.registerPlayerInRoom(1, firstPlayer);
+            roomPersistence.registerPlayerInRoom(1, firstPlayer);
+            fail();
+        } catch (RoomPersistenceException e) {
+
+        }
+    }
+
 }

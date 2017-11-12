@@ -47,10 +47,9 @@ function init(eventMessage) {
 		getPlayersRoom(roomId),
 		createPlayer(),
 		loadLevel("default"),
-		createOnlinePlayer(),
-		createOnlinePlayer(),
-		createOnlinePlayer()
-
+		createOnlinePlayer(2),
+		createOnlinePlayer(3),
+		createOnlinePlayer(4)
 	])
 	.then(([players, player, level, p1, p2, p3]) => {
 		level.entities.add(player);
@@ -58,6 +57,7 @@ function init(eventMessage) {
 		const onlinePlayers = [p1, p2, p3];
 		var index = 0;
 		players.forEach((ply) => {
+			console.log(ply);
 			if (ply.nickName !== name) {
 				subscribeTopic(stompClient, "/topic/" +  roomId + "." + ply.nickName, onlinePlayers[index].updateOnline);
 				level.entities.add(onlinePlayers[index]);
@@ -83,9 +83,10 @@ function init(eventMessage) {
 }
 
 function updateCurrentPlayers(eventMessage) {
-	getPlayersRoom(roomId, putPlayers);
+	getPlayersRoom(roomId)
+	.then((players) => putPlayers(players));
 }
 
 function endGame(eventMessage) {
-	//console.log(eventMessage);
+	console.log("Uninplemented");
 }

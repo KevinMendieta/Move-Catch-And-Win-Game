@@ -36,8 +36,8 @@ export function createPlayer() {
 	});
 }
 
-export function createOnlinePlayer() {
-	return loadSpriteSheet("player")
+export function createOnlinePlayer(number) {
+	return loadSpriteSheet("player" + number)
 	.then((sprites) => {
 		const player = new Entity();
 		player.name = "online";

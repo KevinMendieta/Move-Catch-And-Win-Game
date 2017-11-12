@@ -4,7 +4,7 @@
 export function putRooms(rooms) {
 	$("#roomInfo").empty();
 	rooms.forEach((room) => {
-		let content = "<li> id: " + room.id + " current players: " + room.players.length + "</li>";
+		let content = "<li> id: " + room.id + ", current players: " + room.players.length + ", capacity: " + room.capacity + "</li>";
 		$("#roomInfo").append(content);
 	});
 }
