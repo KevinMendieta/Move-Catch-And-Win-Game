@@ -1,6 +1,7 @@
 import Entity, {Trait} from "./Entity.js";
 import Go from "./traits/Go.js";
 import Jump from "./traits/Jump.js";
+import Life from "./traits/Life.js";
 import {loadSpriteSheet} from "./loaders.js";
 import {createAnimation} from "./animation.js";
 
@@ -10,9 +11,10 @@ export function createPlayer() {
 		const player = new Entity();
 		player.size.set(12, 16);
 		player.vel.set(0, 0);
-
+		player.lifePoints = 1000;
 		player.addTrait(new Go());
 		player.addTrait(new Jump());
+		player.addTrait(new Life());
 
 		const  runAnimation = createAnimation(["run_1", "run_2"], 10);
 		function routeFrame(player) {
