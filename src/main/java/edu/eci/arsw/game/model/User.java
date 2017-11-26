@@ -5,17 +5,27 @@
  */
 package edu.eci.arsw.game.model;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 /**
  *
  * @author Zekkenn
  */
+@Document(collection = "users")
 public class User {
     
+    @Id
     private int id;
+    
     private String nickname;
+    
     private String email;
+    
     private String password;
+    
     private String confirmation;
+    
     private boolean enabled;
 
     public int getId() {

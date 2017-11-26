@@ -141,7 +141,7 @@ public class GameAPIController {
         
         try {
             usr.setId(loginServices.getNextId());
-            loginServices.registerNewUser(usr);
+            loginServices.saveUser(usr);
             return new ResponseEntity<>("", HttpStatus.CREATED);
         } catch (UserPersistenceException ex) {
 

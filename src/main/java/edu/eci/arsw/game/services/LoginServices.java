@@ -10,15 +10,20 @@ import edu.eci.arsw.game.persistence.user.UserPersistence;
 import edu.eci.arsw.game.persistence.user.UserPersistenceException;
 import java.util.Map;
 import javax.annotation.PostConstruct;
+
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.apache.shiro.mgt.SecurityManager;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.scheduling.annotation.Async;
 
 /**
  *
@@ -29,10 +34,16 @@ import org.apache.shiro.mgt.SecurityManager;
 public class LoginServices {
     
     private UserPersistence userPersistence;
+    private JavaMailSender sender;
 
     @Autowired
     private SecurityManager securityManager;
 
+    @Autowired
+    public void setSender(JavaMailSender sender) {
+        this.sender = sender;
+    }
+    
     @Autowired
     public void setUserPersistence(UserPersistence userPersistence) {
         this.userPersistence = userPersistence;
@@ -43,7 +54,7 @@ public class LoginServices {
      * @param user the new User.
      * @throws UserPersistenceException if the User already exists.
      */
-    public void registerNewUser(User user) throws UserPersistenceException{
+    public void saveUser(User user) throws UserPersistenceException{
         userPersistence.registerNewUser(user);
     }
     
@@ -55,6 +66,26 @@ public class LoginServices {
      */
     public User getUser(int id) throws UserPersistenceException{
         return userPersistence.getUser(id);
+    }
+    
+    /**
+     * Return a user, is consulted by the unique email
+     * @param email the user's email
+     * @return The user corresponding to these email. 
+     * @throws UserPersistenceException If there's not user associated with the email.
+     */
+    public User getUserByEmail(String email) throws UserPersistenceException{
+        return userPersistence.getUserByEmail(email);
+    }
+    
+    /**
+     * Return a user, is consulted by the unique confirmation token
+     * @param confirmation the user's confirmation token
+     * @return The user corresponding to these confirmation token. 
+     * @throws UserPersistenceException If there's not user associated with the confirmation token.
+     */
+    public User getUserByConfirmation(String confirmation) throws UserPersistenceException{
+        return userPersistence.getUserByConfirmation(confirmation);
     }
     
     /**
@@ -98,6 +129,11 @@ public class LoginServices {
         } catch ( IncorrectCredentialsException | UnknownAccountException  ex ){
             throw new UserPersistenceException("Password didn't match, try again.");
         }
+    }
+    
+    @Async
+    public void sendConfirmationEmail(SimpleMailMessage email) {
+        this.sender.send(email);
     }
     
     /**

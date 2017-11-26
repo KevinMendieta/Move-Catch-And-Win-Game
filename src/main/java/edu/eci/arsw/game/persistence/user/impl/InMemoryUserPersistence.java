@@ -21,14 +21,19 @@ public class InMemoryUserPersistence implements UserPersistence{
     
     private final Map<Integer, User> users = new ConcurrentHashMap<>();
     private final Map<String, User> nicks = new ConcurrentHashMap<>();
+    private final Map<String, User> emails = new ConcurrentHashMap<>();
+    private final Map<String, User> confirmTokens = new ConcurrentHashMap<>();
 
     @Override
     public void registerNewUser(User user) throws UserPersistenceException {
-        if ( users.containsKey(user.getId()) || nicks.containsKey(user.getNickname()) ) 
+        if ( users.containsKey(user.getId()) || nicks.containsKey(user.getNickname()) || emails.containsKey(user.getEmail())) 
             throw new UserPersistenceException("User already registered.");
         else {
-            users.put(user.getId(), user); nicks.put(user.getNickname(), user);
+            users.put(user.getId(), user); nicks.put(user.getNickname(), user); emails.put(user.getEmail(), user); confirmTokens.put(user.getConfirmation(), user);
         }
+        for (int i = 1; i < 5; i++) {System.out.println("");}
+        System.out.println(confirmTokens.get(user.getConfirmation()).getConfirmation());
+        for (int i = 1; i < 5; i++) {System.out.println("");}
     }
 
     @Override
@@ -57,6 +62,28 @@ public class InMemoryUserPersistence implements UserPersistence{
             throw new UserPersistenceException("User not found.");
         else
             return nicks.get(nickName);
+    }
+
+    @Override
+    public User getUserByEmail(String email) throws UserPersistenceException {
+        System.out.println("------------------------------ Wellcome: "+email+" ------------------------------");
+        if ( email == null ) throw new UserPersistenceException("User not found.");
+        if ( !emails.containsKey(email) )
+            throw new UserPersistenceException("User not found.");
+        else
+            return emails.get(email);
+    }
+
+    @Override
+    public User getUserByConfirmation(String confirmation) throws UserPersistenceException {
+        for (int i = 1; i < 5; i++) {System.out.println("");}
+        System.out.println("------------------------------ Wellcome: "+confirmation+" ------------------------------");
+        for (int i = 1; i < 5; i++) {System.out.println("");}
+        if ( confirmation == null ) throw new UserPersistenceException("User not found.");
+        if ( !confirmTokens.containsKey(confirmation) )
+            throw new UserPersistenceException("User not found.");
+        else
+            return confirmTokens.get(confirmation);
     }
     
 }

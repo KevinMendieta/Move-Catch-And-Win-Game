@@ -1,0 +1,8 @@
+spring:
+    data:
+        mongodb:
+            host: ds117136.mlab.com
+            port: 17136
+            database: lab7_arsw
+            username: Hakuto
+            password: Arsw123 
