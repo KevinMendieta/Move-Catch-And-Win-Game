@@ -1,5 +1,6 @@
 {
 	"imageURL" : "/img/sprites.png",
+	"color" : "#FFE43A",
 	"frames" : [
 		{
 			"name" : "quiet",

@@ -46,4 +46,14 @@ export default class SpriteSheet {
 		this.draw(name, context, x * this.width, y * this.height);
 	}
 
+	drawLine(context, x1, y1, x2, y2) {
+		context.beginPath();
+		context.lineCap = "round";
+		context.lineWidth = 10;
+		context.strokeStyle = this.color;
+		context.moveTo(x1, y1);
+		context.lineTo(x2, y2);
+		context.stroke();
+	}
+
 }

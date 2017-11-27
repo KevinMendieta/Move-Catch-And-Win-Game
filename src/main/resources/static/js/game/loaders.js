@@ -60,7 +60,10 @@ export function loadSpriteSheet(name) {
 				tiles.defineTile(tileSpec.name, tileSpec.index[0], tileSpec.index[1]);
 			});	
 		}
-		
+		if (sheetSpec.color) {
+			tiles.color = sheetSpec.color;
+		}
+
 		if (sheetSpec.frames) {
 			sheetSpec.frames.forEach((frameSpec) => {
 				tiles.define(frameSpec.name, ...frameSpec.rect);

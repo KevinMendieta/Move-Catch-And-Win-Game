@@ -13,11 +13,13 @@ export default class Go extends Trait {
 
 	update(entity, deltaTime) {
 		entity.vel.x = this.speed * this.dir * deltaTime;
-
+		console.log(entity.lifePoints);
 		if (this.dir) {
+			entity.life.increase(entity);
 			this.heading = this.dir;
 			this.distance += Math.abs(entity.vel.x)  * deltaTime;
 		} else {
+			entity.life.decrease(entity);
 			this.distance = 0;
 		}
 		

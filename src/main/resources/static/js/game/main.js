@@ -75,7 +75,7 @@ function init(eventMessage) {
 		timer.update = function update(deltaTime) {
 			level.update(deltaTime);
 			level.comp.draw(context);
-			const data = {x : player.pos.x, y : player.pos.y, anim:player.anim, heading : player.go.heading < 0};
+			const data = {x : player.pos.x, y : player.pos.y, anim : player.anim, heading : player.go.heading < 0, lifePoints : player.lifePoints, maxlifePoints : player.maxlifePoints};
 			stompClient.send("/topic/" +  roomId + "." + name, {}, JSON.stringify(data));
 		};
 		timer.start();
