@@ -26,4 +26,8 @@ export default class Timer {
 	start() {
 		this.enqueue();
 	}
+
+	stop() {
+		this.updateProxy = (time) => {};
+	}
 }

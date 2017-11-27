@@ -37,4 +37,8 @@ export default class KeyboardState {
 		});		
 	}
 
+	cleanMapping() {
+		this.keyMap.clear();
+	}
+
 }

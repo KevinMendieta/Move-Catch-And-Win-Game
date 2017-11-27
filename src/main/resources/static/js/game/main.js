@@ -15,6 +15,8 @@ var name = Math.floor((Math.random() * 10) + 1) + "",
 	roomId,
 	canvas,
 	context,
+	playersLen,
+	deadPlayers,
 	stompClient;
 
 function loadRooms() {
@@ -29,6 +31,7 @@ function subscribe() {
 		subscribeTopic(stompClient, "/topic/start." +  roomId, init);
 		subscribeTopic(stompClient, "/topic/players." +  roomId, updateCurrentPlayers);
 		subscribeTopic(stompClient, "/topic/winner." +  roomId, endGame);
+		subscribeTopic(stompClient, "/topic/dead." + roomId, deadPlayer)
 		enterRoom(roomId, {nickName : name});
 	});
 }
@@ -53,7 +56,8 @@ function init(eventMessage) {
 	])
 	.then(([players, player, level, p1, p2, p3]) => {
 		level.entities.add(player);
-
+		playersLen = players.length;
+		deadPlayers = 0;
 		const onlinePlayers = [p1, p2, p3];
 		var index = 0;
 		players.forEach((ply) => {
@@ -77,6 +81,10 @@ function init(eventMessage) {
 			level.comp.draw(context);
 			const data = {x : player.pos.x, y : player.pos.y, anim : player.anim, heading : player.go.heading < 0, lifePoints : player.lifePoints, maxlifePoints : player.maxlifePoints};
 			stompClient.send("/topic/" +  roomId + "." + name, {}, JSON.stringify(data));
+			if(!level.alivePlayer){
+				stompClient.send("/topic/dead." + roomId, {}, JSON.stringify({name: name}));
+				input.cleanMapping();
+			}
 		};
 		timer.start();
 	});
@@ -88,5 +96,13 @@ function updateCurrentPlayers(eventMessage) {
 }
 
 function endGame(eventMessage) {
-	console.log("Uninplemented");
+	
+}
+
+function deadPlayer(eventMessage) {
+	deadPlayers++;
+	if (deadPlayers == playersLen - 1) {
+		console.log("winner!!!!");
+		//stompClient.send("/topic/winner." + roomId, {}, JSON.stringify({name: name}));
+	}
 }

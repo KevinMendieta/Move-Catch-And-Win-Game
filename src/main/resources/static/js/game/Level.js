@@ -30,6 +30,8 @@ export default class Level {
 				this.tileCollider.checkY(entity);
 
 				entity.vel.y += this.gravity * deltaTime;
+
+				this.alivePlayer = entity.lifePoints > 0;
 			}
 		});
 		this.totalTime += deltaTime;

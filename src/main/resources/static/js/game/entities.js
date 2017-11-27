@@ -9,6 +9,8 @@ export function createPlayer() {
 	return loadSpriteSheet("player1")
 	.then((sprites) => {
 		const player = new Entity();
+		const px = 32;
+		const py = 400;
 		player.name = "local";
 		player.pos.set(45, 45);
 		player.size.set(12, 16);
@@ -34,8 +36,6 @@ export function createPlayer() {
 
 		player.draw = function drawPlayer(context) {
 			sprites.draw(routeFrame(this), context, this.pos.x, this.pos.y, this.go.heading < 0);
-			const px = 32;
-			const py = 400;
 			const dx = Math.floor((this.lifePoints * 160) / this.maxlifePoints);
 			sprites.drawLine(context, px, py, px + dx, py);
 		};
@@ -48,6 +48,7 @@ export function createOnlinePlayer(number) {
 	return loadSpriteSheet("player" + number)
 	.then((sprites) => {
 		const player = new Entity();
+		const py = 400;
 		player.name = "online";
 		player.pos.set(45, 45);
 		player.anim = "quiet";
@@ -67,7 +68,6 @@ export function createOnlinePlayer(number) {
 		player.draw = function drawPlayer(context) {
 			sprites.draw(this.anim, context, this.pos.x, this.pos.y, this.heading);
 			const px = (32 * ((number - 1) * 6)) + 32;
-			const py = 400;
 			const dx = Math.floor((this.lifePoints * 160) / this.maxlifePoints);
 			sprites.drawLine(context, px, py, px + dx, py);
 		};
