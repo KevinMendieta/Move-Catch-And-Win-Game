@@ -83,6 +83,15 @@ public class GameServices {
         return roomPersistence.getPlayersOfRoom(id);
     }
     
+    /**
+     * Deletes a room given the id.
+     * @param id The id of the room.
+     * @throws RoomPersistenceException if the room does not exists.
+     */
+    public void deleteRoom(int id) throws RoomPersistenceException {
+        roomPersistence.deleteRoom(id);
+    }
+    
     @Autowired
     public void setRoomPersistence(RoomPersistence roomPersistence) {
         this.roomPersistence = roomPersistence;

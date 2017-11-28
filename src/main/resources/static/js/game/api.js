@@ -22,3 +22,7 @@ export function enterRoom(roomId, player) {
 		}
 	);
 }
+
+export function deleteRoom(roomId) {
+	
+}

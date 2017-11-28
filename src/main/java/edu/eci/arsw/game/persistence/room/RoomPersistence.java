@@ -62,5 +62,12 @@ public interface RoomPersistence {
      * @throws RoomPersistenceException if the room does not exists.
      */
     public ArrayList<Player> getPlayersOfRoom(int id) throws RoomPersistenceException;
+    
+    /**
+     * Deletes a room given the id.
+     * @param id The id of the room.
+     * @throws RoomPersistenceException if the room does not exists.
+     */
+    public void deleteRoom(int id) throws RoomPersistenceException;
 
 }

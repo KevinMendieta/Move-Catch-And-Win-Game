@@ -1,6 +1,6 @@
 //@author KevinMendieta
 
-import {getAllRooms, getPlayersRoom, enterRoom} from "./api.js";
+import {getAllRooms, getPlayersRoom, enterRoom, deleteRoom} from "./api.js";
 import {putRooms, putPlayers, putCanvas} from "./domEditor.js";
 import {getStompClient, subscribeTopic} from "./stompHandler.js";
 
@@ -42,6 +42,8 @@ refreshButton.addEventListener("click", loadRooms);
 const subscribeButton = document.getElementById("subscribeButton");
 subscribeButton.addEventListener("click", subscribe);
 
+var timer;
+
 function init(eventMessage) {
 	putCanvas(832, 416);
 	canvas = document.getElementById("screen");
@@ -75,7 +77,7 @@ function init(eventMessage) {
 		input.listenTo(window);
 		// setupMouseControl(canvas, player);
 
-		const timer = new Timer(1 / 60);
+		timer = new Timer(1 / 60);
 		timer.update = function update(deltaTime) {
 			level.update(deltaTime);
 			level.comp.draw(context);
@@ -96,13 +98,20 @@ function updateCurrentPlayers(eventMessage) {
 }
 
 function endGame(eventMessage) {
-	
+	console.log("winner!!!!!!!!!");
+	const content = JSON.parse(eventMessage.body);
+	timer.stop();
+	if (content === name + "") {
+		alert("You won!!!");
+	} else {
+		alert("Player " + content.name + " has won!");
+	}	
 }
 
 function deadPlayer(eventMessage) {
+	console.log("dead player!!!!");
 	deadPlayers++;
 	if (deadPlayers == playersLen - 1) {
-		console.log("winner!!!!");
-		//stompClient.send("/topic/winner." + roomId, {}, JSON.stringify({name: name}));
+		stompClient.send("/topic/winner." + roomId, {}, JSON.stringify({name: name}));
 	}
 }
