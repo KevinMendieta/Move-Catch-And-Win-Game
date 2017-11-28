@@ -79,6 +79,14 @@
             <artifactId>logback-classic</artifactId>
             <scope>runtime</scope>
         </dependency>
+        
+        <!--Redis dependecies-->
+        <dependency>
+            <groupId>com.github.kstyrc</groupId>
+            <artifactId>embedded-redis</artifactId>
+            <version>0.6</version>
+        </dependency>
+        
     </dependencies>
 
     <build>
