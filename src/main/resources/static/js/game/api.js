@@ -24,7 +24,12 @@ export function enterRoom(roomId, player) {
 }
 
 export function createRoom(room) {
-	
+	return $.ajax({
+		url : "/rooms",
+		type : "POST",
+		data : JSON.stringify(room),
+		contentType: "application/json"
+	});
 }
 
 export function deleteRoom(roomId) {
