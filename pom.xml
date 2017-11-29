@@ -117,6 +117,14 @@
             <artifactId>nekohtml</artifactId>
             <version>1.9.21</version>
         </dependency>
+        
+        <!--Redis dependecies-->
+        <dependency>
+            <groupId>com.github.kstyrc</groupId>
+            <artifactId>embedded-redis</artifactId>
+            <version>0.6</version>
+        </dependency>
+        
     </dependencies>
 
     <build>

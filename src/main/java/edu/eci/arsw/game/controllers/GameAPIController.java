@@ -150,6 +150,16 @@ public class GameAPIController {
         
     }
     
+    @RequestMapping(method = RequestMethod.DELETE, path = "/rooms/{roomId}")
+    public ResponseEntity<?> deleteRoom(@PathVariable int roomId) {
+        try {
+            gameServices.deleteRoom(roomId);
+            return new ResponseEntity<>(HttpStatus.ACCEPTED);
+        }catch(RoomPersistenceException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.FORBIDDEN);
+        }
+    }
+    
     public void newPlayer(int id) {
         msgt.convertAndSend("/topic/players." +  id, "New player.");
     }

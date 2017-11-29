@@ -22,3 +22,14 @@ export function enterRoom(roomId, player) {
 		}
 	);
 }
+
+export function createRoom(room) {
+	
+}
+
+export function deleteRoom(roomId) {
+	return $.ajax({
+		url : "/rooms/" + roomId,
+		type : "DELETE"
+	});
+}

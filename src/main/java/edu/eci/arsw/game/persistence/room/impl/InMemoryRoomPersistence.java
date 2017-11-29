@@ -74,5 +74,11 @@ public class InMemoryRoomPersistence implements RoomPersistence{
         if (!rooms.containsKey(id)) throw new RoomPersistenceException("The room " + id + " does not exist.");
         return rooms.get(id).getPlayers();
     }
+    
+    @Override
+    public void deleteRoom(int id) throws RoomPersistenceException {
+        if (!rooms.containsKey(id)) throw new RoomPersistenceException("The room " + id + " does not exist.");
+        rooms.remove(id);
+    }
 
 }
