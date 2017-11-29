@@ -101,17 +101,21 @@ function endGame(eventMessage) {
 	console.log("winner!!!!!!!!!");
 	const content = JSON.parse(eventMessage.body);
 	timer.stop();
-	if (content === name + "") {
+	if (content.name === name) {
 		alert("You won!!!");
+		deleteRoom(roomId)
+		.then(() => location.reload());
 	} else {
 		alert("Player " + content.name + " has won!");
-	}	
+		location.reload();
+	}
 }
 
 function deadPlayer(eventMessage) {
-	console.log("dead player!!!!");
+	const content = JSON.parse(eventMessage.body);
 	deadPlayers++;
-	if (deadPlayers == playersLen - 1) {
+	console.log("dead player!!!!!!!!!!!: " + content.name);
+	if (deadPlayers == playersLen - 1 && (content.name !== name)) {
 		stompClient.send("/topic/winner." + roomId, {}, JSON.stringify({name: name}));
 	}
 }
