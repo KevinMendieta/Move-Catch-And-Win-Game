@@ -13,23 +13,20 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import redis.embedded.RedisServer;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 
 /**
  *
  * @author 2106897
  */
-public class RedisRoomPersistence implements RoomPersistence{
+public class RedisRoomCache implements RoomPersistence{
     
-    private RedisServer rd;
+    @Autowired
+    private StringRedisTemplate template;
     
-    public RedisRoomPersistence() throws RoomPersistenceException{
-        try {
-            rd = new RedisServer(6379);
-        } catch (IOException ex) {
-            Logger.getLogger(RedisRoomPersistence.class.getName()).log(Level.SEVERE, null, ex);
-            throw new RoomPersistenceException("NO se ha podido crear el servidor redis embebido correctamente.");
-        }
+    public RedisRoomCache() throws RoomPersistenceException{
+
     }
 
     @Override

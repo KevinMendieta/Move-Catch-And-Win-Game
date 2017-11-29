@@ -120,10 +120,9 @@
         
         <!--Redis dependecies-->
         <dependency>
-            <groupId>com.github.kstyrc</groupId>
-            <artifactId>embedded-redis</artifactId>
-            <version>0.6</version>
-        </dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency> 
         
         <!--ActiveMq dependencies-->
         <dependency>
