@@ -1,7 +1,7 @@
 //@author KevinMendieta
 
-import {getAllRooms, getPlayersRoom, enterRoom, deleteRoom} from "./api.js";
-import {putRooms, putPlayers, putCanvas} from "./domEditor.js";
+import {getAllRooms, getPlayersRoom, enterRoom, deleteRoom, createRoom} from "./api.js";
+import {putRooms, putPlayers, putCanvas, putCreateForm} from "./domEditor.js";
 import {getStompClient, subscribeTopic} from "./stompHandler.js";
 
 // Game Stuff
@@ -23,8 +23,12 @@ function loadRooms() {
 	getAllRooms(putRooms);
 }
 
-function subscribe() {
-	roomId = $("#roomId").val();
+function subscribeEvent() {
+	subscribe($("#roomId").val());	
+}
+
+function subscribe(id) {
+	roomId = id;
 	getStompClient()
 	.then((stpClient) => {
 		stompClient = stpClient;
@@ -40,7 +44,10 @@ const refreshButton = document.getElementById("refreshButton");
 refreshButton.addEventListener("click", loadRooms);
 
 const subscribeButton = document.getElementById("subscribeButton");
-subscribeButton.addEventListener("click", subscribe);
+subscribeButton.addEventListener("click", subscribeEvent);
+
+const createButton = document.getElementById("createButton");
+createButton.addEventListener("click", create);
 
 var timer;
 
@@ -118,4 +125,16 @@ function deadPlayer(eventMessage) {
 	if (deadPlayers == playersLen - 1 && (content.name !== name)) {
 		stompClient.send("/topic/winner." + roomId, {}, JSON.stringify({name: name}));
 	}
+}
+
+function create() {
+	putCreateForm();
+	const sendRoomButton = document.getElementById("sendRoom");
+	sendRoomButton.addEventListener("click", sendRoom);
+}
+
+function sendRoom() {
+	const room = {id : $("#nroomId").val(), capacity : $("#nroomCap").val(), players : []};
+	createRoom(room)
+	.then(() => {subscribe(room.id)}, (response) => {alert(response.responseText);});
 }

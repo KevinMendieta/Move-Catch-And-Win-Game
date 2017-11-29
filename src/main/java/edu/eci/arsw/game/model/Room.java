@@ -3,7 +3,6 @@ package edu.eci.arsw.game.model;
 import java.util.ArrayList;
 
 /**
- *
  * @author KevinMendieta
  */
 public class Room {
@@ -39,6 +38,14 @@ public class Room {
      */
     public void setWinner(Player winner) {
         this.winner = winner;
+    }
+    
+    /**
+     * Sets the players of the room.
+     * @param players The list of players.
+     */
+    public void setPlayers(ArrayList<Player> players) {
+        this.players = players;
     }
 
     /**

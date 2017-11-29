@@ -23,6 +23,14 @@ export function putCanvas(width, height) {
 	$("#gameCanvas").append(content);
 }
 
+export function putCreateForm(){
+	const content = "<h3> Create a new Room: </h3>"  
+	+ "<input id=" + str("nroomId") + " type=" + str("text") + " placeholder=" + str("Room Id") + "/>" 
+	+ "<input id=" + str("nroomCap") + " type=" + str("text") + " placeholder=" + str("Capacity") + "/>" 
+	+ "<a id=" + str("sendRoom") + " class=" + str("button fit") + ">" + "Create</a>";
+	return $("#createForm").append(content);
+} 
+
 function str(token) {
 	return '"' + token + '"'
 }
