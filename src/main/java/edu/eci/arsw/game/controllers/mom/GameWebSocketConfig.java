@@ -26,14 +26,21 @@ public class GameWebSocketConfig extends AbstractWebSocketMessageBrokerConfigure
     @Value("${messagesServer.port}")
     private int messagesServerPort;
     
+    @Value("${messagesServer.runInHeroku}")
+    private boolean runInHeroku;
+    
     @Override
     public void configureMessageBroker(MessageBrokerRegistry config) {
-        config.enableStompBrokerRelay("/topic").setRelayHost(messagesIpServer).setRelayPort(messagesServerPort).
+        if ( runInHeroku ) {
+            config.enableSimpleBroker("/topic");
+        } else {
+            config.enableStompBrokerRelay("/topic").setRelayHost(messagesIpServer).setRelayPort(messagesServerPort).
                 setClientLogin(messagesServerLogin).
                 setClientPasscode(messagesServerPasswd).
                 setSystemLogin(messagesServerLogin).
                 setSystemPasscode(messagesServerPasswd).
                 setVirtualHost(messagesServerLogin);
+        }
         config.setApplicationDestinationPrefixes("/app");
     }
 

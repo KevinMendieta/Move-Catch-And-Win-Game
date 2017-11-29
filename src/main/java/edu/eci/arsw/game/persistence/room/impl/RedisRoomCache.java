@@ -25,12 +25,19 @@ public class RedisRoomCache implements RoomPersistence{
     @Autowired
     private StringRedisTemplate template;
     
+    private String game = "room:";
+    
     public RedisRoomCache() throws RoomPersistenceException{
 
     }
 
     @Override
     public void registerNewRoom(Room room) throws RoomPersistenceException {
+        if ( template.hasKey(game+room.getId()) ){
+            throw new RoomPersistenceException("La sala ya se encuentra creada.");
+        } else {
+            
+        }
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
