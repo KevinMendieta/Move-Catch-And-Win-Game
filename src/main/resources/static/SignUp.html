@@ -19,103 +19,129 @@
         <meta name="description" content="" />
         <meta name="author" content="" />
 
-        <link rel="icon" href="favicon.ico" />
-        <link rel="stylesheet" href="stylesheets/style.css"/>
-        <link rel="stylesheet" href="stylesheets/fv.css"/>
         <link
             href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
             rel="stylesheet"
             integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
             crossorigin="anonymous" />
+        <link rel="icon" href="favicon.ico" />
+        <link rel="stylesheet" href="stylesheets/main.css" />
     </head>
 
-    <body class="gray-bg" background="/img/BackgroundMaC.jpg">
+    <body class="is-loading">
 
-        <div class="middle-box text-center loginscreen animated fadeInDown">
-            <div style="background-color: rgba(0,0,0,0)">
+        <div id="wrapper" class="fade-in">
 
-                <h2 style="color: #ffffff;border: 5px solid">Create Game Account</h2>
+            <div id="main">
+                <section class="post">
+                    <header class="major">
+                        <h1>Create Game Account</h1>
+                    </header>
 
-                <form autocomplete="off" action="#" th:action="@{/SignUp}"
+                    <form autocomplete="off" action="#" th:action="@{/SignUp}"
                       th:object="${user}" method="post" class="m-t" role="form"
                       data-toggle="validator" id="accountForum">
+                        
+                        <!-- Alerts -->
+                        <div class="row">
+                            <div class="6u 12u$(xsmall)">
+                                <div th:if="${confirmationMessage}" class="alert alert-success"
+                                     role="alert" th:text=${confirmationMessage}></div>
 
-                    <div th:if="${confirmationMessage}" class="alert alert-success"
-                         role="alert" th:text=${confirmationMessage}></div>
+                                <div th:if="${alreadyEmailMessage}"
+                                     class="alert alert-danger" role="alert"
+                                     th:text="${alreadyEmailMessage}"></div>
 
-                    <div th:if="${alreadyEmailMessage}"
-                         class="alert alert-danger" role="alert"
-                         th:text="${alreadyEmailMessage}"></div>
+                                <div th:if="${#fields.hasErrors('nickname')}"
+                                     th:errors="*{firstName}"
+                                     class="validation-message alert alert-danger" role="alert"></div>
 
-                    <div th:if="${#fields.hasErrors('nickname')}"
-                         th:errors="*{firstName}"
-                         class="validation-message alert alert-danger" role="alert"></div>
+                                <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
+                                     class="validation-message alert alert-danger" role="alert"></div>
 
-                    <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
-                         class="validation-message alert alert-danger" role="alert"></div>
-
-                    <div th:if="${#fields.hasErrors('password')}"
-                         th:errors="*{password}"
-                         class="validation-message alert alert-danger" role="alert"></div>
-
-
-                    <div class="form-group input-group has-feedback">
-                        <label th:if="${#fields.hasErrors('nickname')}"
-                               th:errors="*{nickname}" class="validation-message"></label>
-                        <span class="input-group-addon">
-                            <span class="glyphicon glyphicon-user"></span>
-                        </span>
-
-                        <input type="text" th:field="*{nickname}"
-                               placeholder="Nickname" class="form-control" required />
-                        <span class="glyphicon form-control-feedback"
-                              aria-hidden="true"></span>
-                    </div>
-
-                    <div class="form-group input-group has-feedback">
-                        <span class="input-group-addon">
-                            <span class="glyphicon glyphicon-envelope"></span>
-                        </span>
-                        <input type="email" th:field="*{email}"
-                               placeholder="Email Address" class="form-control"
-                               data-error="This email address is invalid" required />
-                        <span class="glyphicon form-control-feedback"
-                              aria-hidden="true"></span>
-                    </div>
-
-                    <div class="form-group input-group">
-                        <span class="input-group-addon">
-                            <span class="glyphicon glyphicon-lock"></span>
-                        </span>
-                        <input name="password" type="password" id="password"  
-                               placeholder="Password" class="form-control" required />
-                        <span class="glyphicon"
-                              aria-hidden="true"></span>
-                    </div>
-
-                    <div class="form-group input-group has-feedback">
-                        <span class="input-group-addon">
-                            <span class="glyphicon glyphicon-lock"></span>
-                        </span>
-                        <input type="password" class="form-control" id="signup-password-confirm" placeholder="Confirm Password" name="ConfirmPassword" data-fv-notempty="true"
-                               data-fv-notempty-message="Please confirm password"
-                               data-fv-identical="true"
-                               data-fv-identical-field="password"
-                               data-fv-identical-message="Both passwords must be identical" />
-
-                        <div class="help-block with-errors"></div>
-                    </div>
+                                <div th:if="${#fields.hasErrors('password')}"
+                                     th:errors="*{password}"
+                                     class="validation-message alert alert-danger" role="alert"></div>
 
 
-                    <button type="submit" class="btn btn-primary block full-width m-b">Register</button>
+                                <!-- UserData -->
 
-                </form>
-                <p class="m-t">
+                                <div class="form-group input-group has-feedback">
+                                    <label th:if="${#fields.hasErrors('nickname')}"
+                                           th:errors="*{nickname}" class="validation-message"></label>
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-user"></span>
+                                    </span>
 
-                </p>
+                                    <input type="text" th:field="*{nickname}"
+                                           placeholder="Nickname" class="form-control" required />
+                                    <span class="glyphicon form-control-feedback"
+                                          aria-hidden="true"></span>
+                                </div>
+
+                                <div class="form-group input-group has-feedback">
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-envelope"></span>
+                                    </span>
+                                    <input type="email" th:field="*{email}"
+                                           placeholder="Email Address" class="form-control"
+                                           data-error="This email address is invalid" required />
+                                    <span class="glyphicon form-control-feedback"
+                                          aria-hidden="true"></span>
+                                </div>
+
+                                <div class="form-group input-group">
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-lock"></span>
+                                    </span>
+                                    <input name="password" type="password" id="password"  
+                                           placeholder="Password" class="form-control" required />
+                                    <span class="glyphicon"
+                                          aria-hidden="true"></span>
+                                </div>
+
+                                <div class="form-group input-group has-feedback">
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-lock"></span>
+                                    </span>
+                                    <input type="password" class="form-control" id="signup-password-confirm" placeholder="Confirm Password" name="ConfirmPassword" data-fv-notempty="true"
+                                           data-fv-notempty-message="Please confirm password"
+                                           data-fv-identical="true"
+                                           data-fv-identical-field="password"
+                                           data-fv-identical-message="Both passwords must be identical" />
+
+                                    <div class="help-block with-errors"></div>
+                                </div>
+                                <p/>
+
+                                <!-- Break -->
+                                <div class="row uniform">
+                                    <div class="2.u 2u$(xsmall)">
+                                        <button type="submit" class="special">Register</button>
+                                    </div>
+                                    <div class="2u $2u$(xsmall)">
+                                        <a href="index.html" class="button">Volver</a>
+                                    </div>
+                                </div>
+                            
+                            </div>
+                            
+                            <div class="6u 12u$(xsmall)">
+                                <img src="/img/SignUpPC.png" style="margin-left: 150px"/>
+                                <h3 style="text-align: center">Move and Catch Accounts include total access to all game features</h3>
+                            </div>
+                        
+                        </div>
+                        
+                    </form>
+
+                </section>
             </div>
-        </div>
 
+        </div>
+        
+        
+        
         <script
         src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
