@@ -128,16 +128,13 @@ public class UserAPIController {
         if (userByToken == null) {
             modelAndView.addObject("invalidConfirmationLinkMessage", "This is an invalid confirmation link.");
         } else {
-            modelAndView.addObject("confirmationLinkMessage", token);
             userByToken.setEnabled(true);
             modelAndView.addObject("successMessage", "Your Account Has Been Confirmed!");
-        }
-        
-        
-        try {
-            loginServices.saveUser(userByToken);
-        } catch (UserPersistenceException ex) {
-            Logger.getLogger(UserAPIController.class.getName()).log(Level.SEVERE, null, ex);
+            try {
+                loginServices.saveUser(userByToken);
+            } catch (UserPersistenceException ex) {
+                Logger.getLogger(UserAPIController.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
 
         modelAndView.setViewName("confirmation");
