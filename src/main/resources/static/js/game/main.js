@@ -7,7 +7,7 @@ import {getStompClient, subscribeTopic} from "./stompHandler.js";
 // Game Stuff
 import Timer from "./Timer.js";
 import {loadLevel} from "./loaders.js";
-import {createPlayer, createOnlinePlayer} from "./entities.js";
+import {createPlayer, createOnlinePlayer, createBlockController} from "./entities.js";
 import {setupKeyboard} from "./input.js";
 // import {setupMouseControl} from "./debug.js";
 
@@ -61,11 +61,13 @@ function init(eventMessage) {
 		loadLevel("default"),
 		createOnlinePlayer(2),
 		createOnlinePlayer(3),
-		createOnlinePlayer(4)
+		createOnlinePlayer(4),
+		createBlockController()
 	])
-	.then(([players, player, level, p1, p2, p3]) => {
+	.then(([players, player, level, p1, p2, p3, block]) => {
 		var startGame = true;
 		level.entities.add(player);
+		level.entities.add(block);
 		playersLen = players.length;
 		deadPlayers = 0;
 		const onlinePlayers = [p1, p2, p3];
@@ -87,8 +89,7 @@ function init(eventMessage) {
 
 		timer = new Timer(1 / 60);
 		timer.update = function update(deltaTime) {
-			var arng = new alea('hello.');
-			console.log(arng.int32());
+			console.log();
 			level.update(deltaTime);
 			level.comp.draw(context);
 			const data = {x : player.pos.x, y : player.pos.y, anim : player.anim, heading : player.go.heading < 0, lifePoints : player.lifePoints, maxlifePoints : player.maxlifePoints};
@@ -100,6 +101,7 @@ function init(eventMessage) {
 			}
 		};
 		timer.start();
+		block.createBlocks();
 	});
 }
 

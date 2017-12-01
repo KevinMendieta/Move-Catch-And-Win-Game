@@ -32,6 +32,8 @@ export default class Level {
 				entity.vel.y += this.gravity * deltaTime;
 
 				this.alivePlayer = entity.lifePoints > 0;
+			} else if (entity.name === "block"){
+				entity.update();
 			}
 		});
 		this.totalTime += deltaTime;

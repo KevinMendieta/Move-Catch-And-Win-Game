@@ -4,6 +4,22 @@ import Jump from "./traits/Jump.js";
 import Life from "./traits/Life.js";
 import {loadSpriteSheet} from "./loaders.js";
 import {createAnimation} from "./animation.js";
+import BlocksController from "./BlocksController.js";
+
+export function createBlockController(seed = "l") {
+	return loadSpriteSheet("block")
+	.then((sprites) => {
+		const blocksController = new BlocksController(seed);
+		blocksController.name = "block";
+		blocksController.draw = function drawBlock(context) {
+			this.blocks.forEach((block) => {
+				//console.log(block);
+				sprites.draw("block", context, block.pos.x, block.pos.y, true);
+			});
+		}
+		return blocksController;
+	});
+}
 
 export function createPlayer() {
 	return loadSpriteSheet("player1")

@@ -1,0 +1,9 @@
+{
+	"imageURL" : "/img/tiles.png",
+	"frames" : [
+		{
+			"name" : "block",
+			"rect" : [32, 0, 32, 32]
+		}
+	]
+}
