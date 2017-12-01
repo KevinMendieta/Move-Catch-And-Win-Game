@@ -64,6 +64,7 @@ function init(eventMessage) {
 		createOnlinePlayer(4)
 	])
 	.then(([players, player, level, p1, p2, p3]) => {
+		var startGame = true;
 		level.entities.add(player);
 		playersLen = players.length;
 		deadPlayers = 0;
@@ -86,11 +87,14 @@ function init(eventMessage) {
 
 		timer = new Timer(1 / 60);
 		timer.update = function update(deltaTime) {
+			var arng = new alea('hello.');
+			console.log(arng.int32());
 			level.update(deltaTime);
 			level.comp.draw(context);
 			const data = {x : player.pos.x, y : player.pos.y, anim : player.anim, heading : player.go.heading < 0, lifePoints : player.lifePoints, maxlifePoints : player.maxlifePoints};
 			stompClient.send("/topic/" +  roomId + "." + name, {}, JSON.stringify(data));
-			if(!level.alivePlayer){
+			if(!level.alivePlayer && startGame){
+				startGame = false;
 				stompClient.send("/topic/dead." + roomId, {}, JSON.stringify({name: name}));
 				input.cleanMapping();
 			}
