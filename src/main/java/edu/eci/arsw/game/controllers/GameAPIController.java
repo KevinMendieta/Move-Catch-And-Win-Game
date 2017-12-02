@@ -80,19 +80,19 @@ public class GameAPIController {
         return new ResponseEntity<>(loginServices.getAllUsers(), HttpStatus.ACCEPTED);
     }
     
-    @RequestMapping(method = RequestMethod.GET, path = "/loggedUser")
+    /*@RequestMapping(method = RequestMethod.GET, path = "/loggedUser")
     public ResponseEntity<?> getLoggedUser(){
         try {
             return new ResponseEntity<>(loginServices.getCurrentUser(), HttpStatus.ACCEPTED);
         } catch (UserPersistenceException ex) {
             return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
         }
-    }
+    }*/
     
     
     /*POST METHODS*/
 
-    @RequestMapping(method = RequestMethod.POST, path = "/login")
+    /*@RequestMapping(method = RequestMethod.POST, path = "/login")
     public ResponseEntity<?> login(@RequestBody User user){
         try {
             loginServices.login(user);
@@ -101,7 +101,7 @@ public class GameAPIController {
         } catch (UserPersistenceException ex) {
             return new ResponseEntity<>(ex.getMessage(), HttpStatus.FORBIDDEN);
         }
-    }
+    }*/
     
     @RequestMapping(method = RequestMethod.POST, path = "/rooms")
     public ResponseEntity<?> registerNewRoom(@RequestBody Room room) {
@@ -136,7 +136,7 @@ public class GameAPIController {
         }
     }
     
-    @RequestMapping(method = RequestMethod.POST, path = "/user")
+    /*@RequestMapping(method = RequestMethod.POST, path = "/user")
     public ResponseEntity<?> addNewUser(@RequestBody User usr){
         
         try {
@@ -148,7 +148,7 @@ public class GameAPIController {
             return new ResponseEntity<>(ex.getMessage(), HttpStatus.FORBIDDEN); 
         }
         
-    }
+    }*/
     
     @RequestMapping(method = RequestMethod.DELETE, path = "/rooms/{roomId}")
     public ResponseEntity<?> deleteRoom(@PathVariable int roomId) {

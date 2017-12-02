@@ -8,7 +8,11 @@ package edu.eci.arsw.game.services;
 import edu.eci.arsw.game.model.User;
 import edu.eci.arsw.game.persistence.user.UserPersistence;
 import edu.eci.arsw.game.persistence.user.UserPersistenceException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 
 import org.apache.shiro.SecurityUtils;
@@ -24,6 +28,11 @@ import org.apache.shiro.mgt.SecurityManager;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 /**
  *
@@ -31,7 +40,7 @@ import org.springframework.scheduling.annotation.Async;
  */
 @Service
 @Component
-public class LoginServices {
+public class LoginServices implements UserDetailsService{
     
     private UserPersistence userPersistence;
     private JavaMailSender sender;
@@ -47,6 +56,25 @@ public class LoginServices {
     @Autowired
     public void setUserPersistence(UserPersistence userPersistence) {
         this.userPersistence = userPersistence;
+    }
+    
+    @Override
+    public UserDetails loadUserByUsername(String string) {
+        User user = null;
+        try {
+            user = getUserByNickname(string);
+        } catch (UserPersistenceException ex) {
+            Logger.getLogger(LoginServices.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        if (user == null || user.isEnabled() == false){
+            throw new BadCredentialsException("User details not found with this username: " + string);
+        }
+        
+        List<SimpleGrantedAuthority> authList = new ArrayList<>();
+        authList.add(new SimpleGrantedAuthority("ROLE_USER"));
+        
+        return new org.springframework.security.core.userdetails.User(user.getNickname(),user.getPassword(),authList);
     }
     
     /**
@@ -66,6 +94,16 @@ public class LoginServices {
      */
     public User getUser(int id) throws UserPersistenceException{
         return userPersistence.getUser(id);
+    }
+    
+    /**
+     * Return a user, is consulted by the unique nickname
+     * @param nickname the user's nickname
+     * @return The user corresponding to these nickname. 
+     * @throws UserPersistenceException If there's not user associated with the nickname.
+     */
+    public User getUserByNickname(String nickname) throws UserPersistenceException{
+        return userPersistence.getUserByNickname(nickname);
     }
     
     /**
@@ -143,5 +181,7 @@ public class LoginServices {
     private void initStaticSecurityManager() {
         SecurityUtils.setSecurityManager(securityManager);
     }
+
+    
     
 }

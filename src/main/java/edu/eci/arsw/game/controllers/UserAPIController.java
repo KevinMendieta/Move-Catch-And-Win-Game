@@ -24,6 +24,11 @@ import edu.eci.arsw.game.persistence.user.UserPersistenceException;
 import edu.eci.arsw.game.services.LoginServices;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.LockedException;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -35,6 +40,10 @@ public class UserAPIController {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
     private LoginServices loginServices;
 
+    
+    //=============================SING UP SERVICES==============================
+    
+    
     @RequestMapping(value = "/SignUp", method = RequestMethod.GET)
     public ModelAndView getRegistration(ModelAndView modelAndView, User user) {
         System.out.println("Requesting SignUp Page");
@@ -141,6 +150,42 @@ public class UserAPIController {
         return modelAndView;
     }
     
+    
+    
+    
+    
+    
+    //=============================SING UP SERVICES==============================
+    
+    
+    @RequestMapping(value = "/LogIn", method = RequestMethod.GET)
+    public ModelAndView getlogin(@RequestParam(value = "error", required = false) boolean error, HttpServletRequest request, ModelAndView modelAndView, User user) {
+        System.out.println("Requesting LogIn Page");
+        modelAndView.addObject("user",user);
+        if (error == true) {
+            Exception exception = (Exception) request.getSession().getAttribute("SPRING_SECURITY_LAST_EXCEPTION");
+            String finalError = "Invalid username or password";
+            if (user.isEnabled() == false){
+                for(int i = 0; i < 5; i++){System.out.println("");}
+                System.out.println("--------------User without Confirm---------------");
+                for(int i = 0; i < 5; i++){System.out.println("");}
+                finalError = "Your account has not been verified yet";
+            }
+            modelAndView.addObject("error", finalError);
+        }
+        modelAndView.setViewName("LogIn");
+        return modelAndView;
+    }
+    
+    
+    @RequestMapping(value = "/loggedUser", method = RequestMethod.GET)
+    public ResponseEntity<?> getLoggedUser(Authentication authentication){
+        try {
+            return new ResponseEntity<>(loginServices.getUserByNickname(authentication.getName()), HttpStatus.ACCEPTED);
+        } catch (UserPersistenceException ex) {
+            return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
+        }
+    }
     
     /* DEPENDENCY INJECTION */
     
