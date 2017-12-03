@@ -68,6 +68,9 @@ function init(eventMessage) {
 		var startGame = true;
 		level.entities.add(player);
 		level.entities.add(block);
+		level.ply = player;
+		level.blockCnt = block;
+
 		playersLen = players.length;
 		deadPlayers = 0;
 		const onlinePlayers = [p1, p2, p3];
@@ -89,7 +92,6 @@ function init(eventMessage) {
 
 		timer = new Timer(1 / 60);
 		timer.update = function update(deltaTime) {
-			console.log();
 			level.update(deltaTime);
 			level.comp.draw(context);
 			const data = {x : player.pos.x, y : player.pos.y, anim : player.anim, heading : player.go.heading < 0, lifePoints : player.lifePoints, maxlifePoints : player.maxlifePoints};
@@ -98,6 +100,8 @@ function init(eventMessage) {
 				startGame = false;
 				stompClient.send("/topic/dead." + roomId, {}, JSON.stringify({name: name}));
 				input.cleanMapping();
+				player.go.dir = 0;
+				player.lifePoints = 0;
 			}
 		};
 		timer.start();

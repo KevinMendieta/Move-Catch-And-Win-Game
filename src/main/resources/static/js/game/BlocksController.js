@@ -3,7 +3,7 @@ import Block from "./Block.js";
 export default class BlocksController {
 
 	constructor(seed, width = 832, height = 416, maxBlocks = 39) {
-		this.gravity = 5;
+		this.gravity = 3;
 		this.generator = new alea(seed);
 		this.blocks = [];
 		this.maxBlocks = maxBlocks;
@@ -44,4 +44,16 @@ export default class BlocksController {
 			}
 		});
 	}
+
+	checkCollision(entity) {
+		let collision = false;
+		for (let i = 0; i < this.blocks.length && !collision; i++) {
+			collision = collide(this.blocks[i].pos.x, this.blocks[i].pos.y, entity.pos.x, entity.pos.y);
+		}
+		return collision;
+	}
+}
+
+function collide(x1, y1, x2, y2) {
+	return x1 < x2 + 12 && x1 + 32 > x2 && y1 < y2 + 16 && y1 + 32 > y2;
 }

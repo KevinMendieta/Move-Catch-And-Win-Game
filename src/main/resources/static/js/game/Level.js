@@ -8,7 +8,7 @@ export default class Level {
 	constructor() {
 		this.gravity = 2000;
 		this.totalTime = 0;
-
+		this.alivePlayer = true;
 		this.comp = new Compositor();
 		this.entities = new Set();
 		this.tiles = new Matrix();
@@ -36,6 +36,9 @@ export default class Level {
 				entity.update();
 			}
 		});
+		if (this.alivePlayer) {
+			this.alivePlayer = !this.blockCnt.checkCollision(this.ply);
+		}
 		this.totalTime += deltaTime;
 	}
 

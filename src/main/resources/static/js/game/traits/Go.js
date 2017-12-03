@@ -13,7 +13,7 @@ export default class Go extends Trait {
 
 	update(entity, deltaTime) {
 		entity.vel.x = this.speed * this.dir * deltaTime;
-		console.log(entity.lifePoints);
+		//console.log(entity.lifePoints);
 		if (this.dir) {
 			entity.life.increase(entity);
 			this.heading = this.dir;
