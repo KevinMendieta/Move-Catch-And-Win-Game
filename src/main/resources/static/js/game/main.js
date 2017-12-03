@@ -105,7 +105,6 @@ function init(eventMessage) {
 			}
 		};
 		timer.start();
-		block.createBlocks();
 	});
 }
 

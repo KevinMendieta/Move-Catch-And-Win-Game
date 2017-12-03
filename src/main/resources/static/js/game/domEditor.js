@@ -24,6 +24,7 @@ export function putCanvas(width, height) {
 }
 
 export function putCreateForm(){
+	$("#createForm").empty();
 	const content = "<h3> Create a new Room: </h3>"  
 	+ "<input id=" + str("nroomId") + " type=" + str("text") + " placeholder=" + str("Room Id") + "/>" 
 	+ "<input id=" + str("nroomCap") + " type=" + str("text") + " placeholder=" + str("Capacity") + "/>" 

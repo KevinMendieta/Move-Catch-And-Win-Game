@@ -12,12 +12,16 @@ export default class Level {
 		this.comp = new Compositor();
 		this.entities = new Set();
 		this.tiles = new Matrix();
-
+		this.spawnedB = false;
 		this.tileCollider = new TileCollider(this.tiles);
 	}
 
 
 	update(deltaTime) {
+		if (this.totalTime >= 3 && !this.spawnedB) {
+			this.spawnedB = true;
+			this.blockCnt.createBlocks();
+		}
 		this.entities.forEach((entity) => {
 			if (entity.name === "local") {
 				entity.update(deltaTime);
@@ -36,7 +40,7 @@ export default class Level {
 				entity.update();
 			}
 		});
-		if (this.alivePlayer) {
+		if (this.alivePlayer && this.spawnedB) {
 			this.alivePlayer = !this.blockCnt.checkCollision(this.ply);
 		}
 		this.totalTime += deltaTime;
