@@ -83,6 +83,7 @@ public class LoginServices implements UserDetailsService{
      * @throws UserPersistenceException if the User already exists.
      */
     public void saveUser(User user) throws UserPersistenceException{
+        user.setId(getNextId());
         userPersistence.registerNewUser(user);
     }
     

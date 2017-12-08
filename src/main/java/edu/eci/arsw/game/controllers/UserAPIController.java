@@ -58,17 +58,22 @@ public class UserAPIController {
 
         // Lookup if there is aldready a user with Email or Nickname Provided
         User userByEmail = null;
+        User userByNick = null;
         
         try {
             userByEmail = loginServices.getUserByEmail(user.getEmail());
         } catch (UserPersistenceException ex) {
             Logger.getLogger(UserAPIController.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-        System.out.println(userByEmail);
-
-        if (userByEmail != null) {
-            modelAndView.addObject("alreadyEmailMessage", "There is already a user registered with the email provided.");
+        
+        try {
+            userByNick = loginServices.getUserByNickname(user.getNickname());
+        } catch (UserPersistenceException ex) {
+            Logger.getLogger(UserAPIController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            
+        if (userByEmail != null || userByNick != null) {
+            modelAndView.addObject("alreadyEmailMessage", "There is already a user registered with the email or nickname provided.");
             modelAndView.setViewName("SignUp");
             bindingResult.reject("email");
         }
@@ -100,6 +105,7 @@ public class UserAPIController {
                 
                 // Set new password
                 user.setPassword(bCryptPasswordEncoder.encode(requestParams.get("password")));
+                
                 loginServices.saveUser(user);
                 
                 //Send Confirmation Email
@@ -110,11 +116,11 @@ public class UserAPIController {
                 registrationEmail.setText("Welcome to MoveCatchAndWin " + user.getNickname() + "\n"
                         + "Please click this link to confirm your account:\n"
                         + appUrl + "/confirmation?token=" + user.getConfirmation());
-                registrationEmail.setFrom("noreply@domain.com");
+                registrationEmail.setFrom("move.catch@yahoo.com");
                 
                 loginServices.sendConfirmationEmail(registrationEmail);
                 
-                modelAndView.addObject("confirmationMessage", "A confirmation email has been sent to " + user.getEmail());
+                modelAndView.addObject("confirmationMessage", "A confirmation email will be sent to " + user.getEmail() + " . That Can Take Several Minutes");
                 modelAndView.setViewName("SignUp");
             } catch (UserPersistenceException ex) {
                 Logger.getLogger(UserAPIController.class.getName()).log(Level.SEVERE, null, ex);
