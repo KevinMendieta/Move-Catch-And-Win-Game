@@ -11,69 +11,137 @@ import edu.eci.arsw.game.persistence.room.RoomPersistence;
 import edu.eci.arsw.game.persistence.room.RoomPersistenceException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author 2106897
  */
-public class RedisRoomCache implements RoomPersistence{
-    
-    @Autowired
-    private StringRedisTemplate template;
-    
-    private String game = "room:";
-    
-    public RedisRoomCache() throws RoomPersistenceException{
+public class RedisRoomCache implements RoomPersistence {
 
+    private StringRedisTemplate template;
+
+    @Autowired
+    public void setTemplate(StringRedisTemplate template) {
+        this.template = template;
+    }
+
+    private String game = "room:";
+
+    private void chargeRooms() {
+        template.opsForHash().put("room:0", "id", "0");
+        template.opsForHash().put("room:0", "capacity", "1");
+        template.opsForHash().put("room:0", "winner", "");
+        template.opsForHash().put("room:11", "id", "11");
+        template.opsForHash().put("room:11", "capacity", "2");
+        template.opsForHash().put("room:11", "winner", "");
+        template.opsForHash().put("room:22", "id", "22");
+        template.opsForHash().put("room:22", "capacity", "3");
+        template.opsForHash().put("room:22", "winner", "");
+    }
+
+    public RedisRoomCache() throws RoomPersistenceException {
+        //chargeRooms();
     }
 
     @Override
     public void registerNewRoom(Room room) throws RoomPersistenceException {
-        if ( template.hasKey(game+room.getId()) ){
+        String actGame = game + room.getId();
+        if (template.hasKey(actGame)) {
             throw new RoomPersistenceException("La sala ya se encuentra creada.");
         } else {
-            
+            template.opsForHash().put(actGame, "id", room.getId() + "");
+            template.opsForHash().put(actGame, "capacity", room.getCapacity() + "");
+            template.opsForHash().put(actGame, "winner", "");
         }
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public void registerPlayerInRoom(int id, Player player) throws RoomPersistenceException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String actGame = game + id;
+        if (!template.hasKey(actGame)) {
+            throw new RoomPersistenceException("La sala no se encuentra creada.");
+        } else {
+            template.opsForList().leftPush(actGame + ":players", player.getNickName());
+        }
     }
 
     @Override
     public void registerWinnerOfRoom(int id, Player player) throws RoomPersistenceException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String actGame = game + id;
+        if (!template.hasKey(actGame)) {
+            throw new RoomPersistenceException("La sala no se encuentra creada.");
+        } else {
+            template.opsForHash().put(actGame, "winner", player.getNickName());
+        }
     }
 
     @Override
     public ArrayList<Room> getRooms() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Set<String> keys = template.keys("room:*");
+        ArrayList<Room> rooms = new ArrayList<>();
+        for (String key : keys) {
+            try {
+                int id = Integer.parseInt(key.substring(5));
+                rooms.add(getRoom(id));
+            } catch (NumberFormatException ex) {
+            } catch (RoomPersistenceException ex) {
+                Logger.getLogger(RedisRoomCache.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return rooms;
     }
 
     @Override
     public Room getRoom(int id) throws RoomPersistenceException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String actGame = game + id;
+        if (!template.hasKey(actGame)) {
+            throw new RoomPersistenceException("La sala no se encuentra creada.");
+        } else {
+            ArrayList<Player> players = getPlayersOfRoom(id);
+            int capacity = Integer.parseInt((String) template.opsForHash().get(actGame, "capacity"));
+            String winner = (String) template.opsForHash().get(actGame, "winner");
+            Room tmp = new Room(id, capacity);
+            tmp.setPlayers(players);
+            return tmp;
+        }
     }
 
     @Override
     public Player getWinnerOfRoom(int id) throws RoomPersistenceException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String actGame = game + id;
+        if (!template.hasKey(actGame)) {
+            throw new RoomPersistenceException("La sala no se encuentra creada.");
+        } else {
+            String name = (String) template.opsForHash().get(actGame, "winner");
+            return new Player(name);
+        }
     }
 
     @Override
     public ArrayList<Player> getPlayersOfRoom(int id) throws RoomPersistenceException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String actGame = game + id;
+        if (!template.hasKey(actGame)) {
+            throw new RoomPersistenceException("La sala no se encuentra creada.");
+        } else {
+            List<String> lst = template.opsForList().range(actGame + ":players", 0, 30);
+            ArrayList<Player> playrs = new ArrayList<>();
+            for (String ply : lst) {
+                playrs.add(new Player(ply));
+            }
+            return playrs;
+        }
     }
 
     @Override
     public void deleteRoom(int id) throws RoomPersistenceException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        template.delete(game + id);
     }
-    
+
 }

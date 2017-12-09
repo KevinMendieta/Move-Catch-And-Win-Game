@@ -6,3 +6,6 @@ spring:
             database: lab7_arsw
             username: Hakuto
             password: Arsw123 
+    redis:
+        host: ec2-35-160-57-197.us-west-2.compute.amazonaws.com
+        port: 6379
