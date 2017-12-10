@@ -25,17 +25,17 @@ public class InMemoryUserPersistence implements UserPersistence{
     private final Map<String, User> emails = new ConcurrentHashMap<>();
     private final Map<String, User> confirmTokens = new ConcurrentHashMap<>();
     
-    /*static{
-        users = new ConcurrentHashMap<>();
-        nicks = new ConcurrentHashMap<>();
-        emails = new ConcurrentHashMap<>();
-        confirmTokens = new ConcurrentHashMap<>();
+    private void init(){
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-        User default1 = new User(); default1.setId(0); default1.setNickname("Timmy"); default1.setPassword(bCryptPasswordEncoder.encode("prueba123")); default1.setConfirmation("default1"); default1.setEmail("default1@gmail.com"); default1.setEnabled(true);
-        User default2 = new User(); default1.setId(1); default1.setNickname("Francis"); default1.setPassword(bCryptPasswordEncoder.encode("prueba123")); default1.setConfirmation("default2"); default1.setEmail("default2@gmail.com"); default1.setEnabled(true);
-        users.put(default1.getId(), default1); nicks.put(default1.getNickname(), default1); emails.put(default1.getEmail(), default1); confirmTokens.put(default1.getConfirmation(), default1);
-        users.put(default2.getId(), default2); nicks.put(default2.getNickname(), default2); emails.put(default2.getEmail(), default2); confirmTokens.put(default2.getConfirmation(), default2);
-    }*/
+        User default1 = new User(); default1.setId(0); default1.setNickname("sebastian"); default1.setPassword("$2a$10$Ad9g0xRUBxG9DQ3mxmHvqu5gYJk8w48yuoqGkjoTFgO6IaSbFDeKC"); 
+        default1.setConfirmation("default1"); default1.setEmail("default1@gmail.com"); default1.setEnabled(true);
+        users.put(default1.getId(), default1); nicks.put(default1.getNickname(), default1); 
+        emails.put(default1.getEmail(), default1); confirmTokens.put(default1.getConfirmation(), default1);
+    }
+
+    public InMemoryUserPersistence() {
+        init();
+    }
 
     @Override
     public void registerNewUser(User user) throws UserPersistenceException {

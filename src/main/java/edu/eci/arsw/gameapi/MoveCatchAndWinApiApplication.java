@@ -8,13 +8,15 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
 /**
  *
  * @author KevinMendieta
  */
 @SpringBootApplication
-@ComponentScan(basePackages = {"edu.eci.arsw.game"})
+@EnableMongoRepositories( basePackages = {"edu.eci.arsw.game.persistence.user"} )
+@ComponentScan(basePackages = {"edu.eci.arsw.game", "edu.eci.arsw.game.persistence.user"})
 public class MoveCatchAndWinApiApplication {
 
     public static void main(String[] args) {

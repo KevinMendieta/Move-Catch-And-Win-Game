@@ -8,9 +8,12 @@ package edu.eci.arsw.game.persistence.user.impl;
 import edu.eci.arsw.game.model.User;
 import edu.eci.arsw.game.persistence.user.UserPersistence;
 import edu.eci.arsw.game.persistence.user.UserPersistenceException;
-import edu.eci.arsw.game.persistence.user.UserRepository;
+import edu.eci.arsw.game.persistence.user.UsersRepository;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  *
@@ -18,7 +21,8 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public class InRepositoryUserPersistence implements UserPersistence{
 
-    private UserRepository userRepository;
+    @Autowired
+    UsersRepository userRepository;
     
     @Override
     public void registerNewUser(User user) throws UserPersistenceException {
@@ -52,14 +56,11 @@ public class InRepositoryUserPersistence implements UserPersistence{
 
     @Override
     public Map<Integer, User> getAllUsers() {
-        return (Map<Integer, User>) userRepository.findAll();
+        Map<Integer, User> tmp = new HashMap<>();
+        for ( User user : userRepository.findAll() ){
+            tmp.put(user.getId(), user);
+        }
+        return tmp;
     }
-
-    @Autowired
-    public void setUserRepository(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
-
-    
     
 }
