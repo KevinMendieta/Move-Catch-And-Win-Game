@@ -25,6 +25,13 @@ public interface UserPersistence {
     public void registerNewUser(User user) throws UserPersistenceException;
     
     /**
+     * update an old user in memory
+     * @param user the new User.
+     * @throws UserPersistenceException if the User doesn't exists.
+     */
+    public void updateUser(User user) throws UserPersistenceException;
+    
+    /**
      * Return a user, is consulted by the unique id
      * @param id the user's id
      * @return The user corresponding to these id. 

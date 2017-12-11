@@ -48,6 +48,15 @@ public class InMemoryUserPersistence implements UserPersistence{
         System.out.println(confirmTokens.get(user.getConfirmation()).getConfirmation());
         for (int i = 1; i < 5; i++) {System.out.println("");}
     }
+    
+    @Override
+    public void updateUser(User user) throws UserPersistenceException {
+        if (users.containsKey(user.getId())){
+            users.replace(user.getId(), user); nicks.replace(user.getNickname(), user); emails.replace(user.getEmail(), user); confirmTokens.replace(user.getConfirmation(), user);
+        }else{
+            throw new UserPersistenceException("User is not register");
+        }
+    }
 
     @Override
     public User getUser(int id) throws UserPersistenceException {

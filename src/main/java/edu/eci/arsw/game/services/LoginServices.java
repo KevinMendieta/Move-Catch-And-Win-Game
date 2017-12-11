@@ -87,6 +87,15 @@ public class LoginServices implements UserDetailsService{
     }
     
     /**
+     * Update an existing user in memory
+     * @param user the new User.
+     * @throws UserPersistenceException if the User doesn't exists.
+     */
+    public void updateUser(User user) throws UserPersistenceException{
+        userPersistence.registerNewUser(user);
+    }
+    
+    /**
      * Return a user, is consulted by the unique id
      * @param id the user's id
      * @return The user corresponding to these id. 

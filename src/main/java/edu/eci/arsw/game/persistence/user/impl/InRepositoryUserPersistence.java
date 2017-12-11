@@ -28,6 +28,11 @@ public class InRepositoryUserPersistence implements UserPersistence{
     public void registerNewUser(User user) throws UserPersistenceException {
         userRepository.save(user);
     }
+    
+    @Override
+    public void updateUser(User user) throws UserPersistenceException {
+        userRepository.save(user);
+    }
 
     @Override
     public User getUser(int id) throws UserPersistenceException {

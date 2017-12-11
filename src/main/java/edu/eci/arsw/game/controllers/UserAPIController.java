@@ -146,7 +146,7 @@ public class UserAPIController {
             userByToken.setEnabled(true);
             modelAndView.addObject("successMessage", "Your Account Has Been Confirmed!");
             try {
-                loginServices.saveUser(userByToken);
+                loginServices.updateUser(userByToken);
             } catch (UserPersistenceException ex) {
                 Logger.getLogger(UserAPIController.class.getName()).log(Level.SEVERE, null, ex);
             }
