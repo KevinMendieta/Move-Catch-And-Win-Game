@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
  *
  * @author Zekkenn
  */
-@Service
+//@Service
 public class InMemoryUserPersistence implements UserPersistence{
     
     private final Map<Integer, User> users = new ConcurrentHashMap<>();

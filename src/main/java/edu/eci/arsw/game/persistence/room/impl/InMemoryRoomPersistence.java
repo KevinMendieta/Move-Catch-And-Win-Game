@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 /**
  * @author KevinMendieta
  */
-@Service
+//@Service
 public class InMemoryRoomPersistence implements RoomPersistence{
 
     private final Map<Integer, Room> rooms = new ConcurrentHashMap<>();

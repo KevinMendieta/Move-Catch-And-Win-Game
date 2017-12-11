@@ -23,6 +23,7 @@ import org.springframework.stereotype.Service;
  *
  * @author 2106897
  */
+@Service
 public class RedisRoomCache implements RoomPersistence {
 
     private StringRedisTemplate template;

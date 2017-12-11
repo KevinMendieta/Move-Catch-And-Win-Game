@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
  *
  * @author Esteban
  */
+@Service
 public class InRepositoryUserPersistence implements UserPersistence{
 
     @Autowired
